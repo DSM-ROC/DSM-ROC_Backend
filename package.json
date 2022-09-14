@@ -1,34 +1,36 @@
 {
-  "name": "dsm-loc_backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/app.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DSM-LOC/DSM-LOC_Backend.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/DSM-LOC/DSM-LOC_Backend/issues"
-  },
-  "homepage": "https://github.com/DSM-LOC/DSM-LOC_Backend#readme",
-  "dependencies": {
-    "@types/express": "^4.17.13",
-    "@types/morgan": "^1.9.3",
-    "@types/node": "^18.7.17",
-    "dotenv": "^16.0.2",
-    "express": "^4.18.1",
-    "morgan": "^1.10.0",
-    "mysql": "^2.18.1",
-    "mysql2": "^2.3.3",
-    "sequelize": "^6.21.6",
-    "sequelize-cli": "^6.4.1",
-    "ts-node": "^10.9.1"
-  },
-  "devDependencies": {}
+   "name": "dsm-loc_backend",
+   "version": "1.0.0",
+   "description": "",
+   "main": "app.ts",
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "ts-node src/app.ts",
+      "typeorm": "typeorm-ts-node-commonjs"
+   },
+   "repository": "git+https://github.com/DSM-LOC/DSM-LOC_Backend.git",
+   "author": "yebin <yebin5127@gmail.com>",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/DSM-LOC/DSM-LOC_Backend/issues"
+   },
+   "homepage": "https://github.com/DSM-LOC/DSM-LOC_Backend#readme",
+   "dependencies": {
+      "@types/express": "^4.17.14",
+      "@types/morgan": "^1.9.3",
+      "@types/node": "^18.7.17",
+      "dotenv": "^16.0.2",
+      "express": "^4.18.1",
+      "morgan": "^1.10.0",
+      "mysql": "^2.14.1",
+      "mysql2": "^2.3.3",
+      "reflect-metadata": "^0.1.13",
+      "ts-node": "^10.9.1",
+      "typeorm": "0.3.7"
+   },
+   "devDependencies": {
+      "@types/node": "^16.11.10",
+      "ts-node": "10.7.0",
+      "typescript": "4.5.2"
+   }
 }
