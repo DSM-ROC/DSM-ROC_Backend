@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import morgan from "morgan";
-import { sequelize } from "./config/config";
+import { createConnection } from "typeorm";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,7 +19,7 @@ app.set("jwt-secret", process.env.JWTKEY);
 app.listen(PORT, () => {
     console.log(PORT, "번 포트에서 대기 중");
 
-    sequelize.sync({ force  : false })
+    createConnection()
         .then(() => {
             console.log("데이터베이스 연결 성공");
         })
