@@ -21,10 +21,10 @@ export class Challenge{
     @Column({ unique: true, nullable: false, length: 15 })
     name: string;
 
-    @Column({ length: 45 })
+    @Column({ length: 45, nullable: true })
     introduction: string;
 
-    @Column({ length: 4 })
+    @Column({ nullable: true })
     password: number;
     
     @ManyToOne(
