@@ -16,11 +16,17 @@ import { User } from "./user";
 export class Challenge{
 
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
     @Column({ unique: true, nullable: false, length: 15 })
-    name: string
+    name: string;
 
+    @Column({ length: 45 })
+    introduction: string;
+
+    @Column({ length: 4 })
+    password: number;
+    
     @ManyToOne(
         () => User,
         (user) => user.id,
