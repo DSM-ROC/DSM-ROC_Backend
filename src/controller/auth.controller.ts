@@ -24,7 +24,7 @@ export const UserLogin = async (req: Request, res: Response, next: NextFunction)
     };
     res.cookie(REFRESH_TOKEN_COOKIE_KEY, refresh, refreshTokenCookieOptions);
 
-    res.status(201).json({ access });
+    res.status(200).json({ access });
   } catch (e) {
     next(e);
   }
