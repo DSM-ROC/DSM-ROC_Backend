@@ -15,7 +15,7 @@ export const createUser = async (
     const userServiceInstance = Container.get(UserService);
     const { id, createdAt, updatedAt } = await userServiceInstance.createUser(userInfoToCreate);
 
-    res.json({ id, createdAt, updatedAt });
+    res.status(201).json({ id, createdAt, updatedAt });
   } catch (e) {
     next(e);
   }
