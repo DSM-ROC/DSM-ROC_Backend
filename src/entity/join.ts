@@ -1,14 +1,10 @@
-import {
-    Entity, 
-    PrimaryColumn
-} from "typeorm";
+import { Entity, PrimaryColumn } from 'typeorm';
 
-@Entity({ name: "join" })
-export class Join{
-    
-    @PrimaryColumn()
-    challengeId: number;
+@Entity({ name: 'join' })
+export class Join {
+  @PrimaryColumn()
+  challengeId: number;
 
-    @PrimaryColumn()
-    userId: number;
-};
+  @PrimaryColumn()
+  userId: number;
+}
