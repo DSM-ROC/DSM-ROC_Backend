@@ -33,7 +33,7 @@ export const UserLogin = async (req: Request, res: Response, next: NextFunction)
 export const UserLogout = (_req: Request, res: Response, next: NextFunction): void => {
   try {
     res.clearCookie(REFRESH_TOKEN_COOKIE_KEY);
-    res.status(200).end();
+    res.status(204).end();
   } catch (e) {
     next(e);
   }
