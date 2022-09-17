@@ -1,29 +1,19 @@
-import express from "express";
-import dotenv from "dotenv";
-import path from "path";
-import morgan from "morgan";
-import { createConnection } from "typeorm";
+import express, { Application } from 'express';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+import config from './config';
+import loadApp from './loaders';
 
-dotenv.config({ path: path.join(__dirname, "../.env") });
+const startServer = async () => {
+  const app: Application = express();
 
-app.use(morgan("dev"));
+  await loadApp(app);
+  app.listen(config.port);
+};
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.set("jwt-secret", process.env.JWTKEY);
-
-app.listen(PORT, () => {
-    console.log(PORT, "번 포트에서 대기 중");
-
-    createConnection()
-        .then(() => {
-            console.log("데이터베이스 연결 성공");
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-});;
+startServer()
+  .then(() => console.log(`Server Run on ${config.port}`))
+  .catch(e => {
+    console.error('Server Run Failed');
+    console.error(e);
+    process.exit(1);
+  });
