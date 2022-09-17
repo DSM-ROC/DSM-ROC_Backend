@@ -15,7 +15,7 @@ export interface OwnAccessJwtPayload {
 }
 
 export interface OwnRefreshJwtPayload {
-  id: number;
+  email: string;
 }
 
 export interface OwnJwtPayload extends OwnAccessJwtPayload, OwnRefreshJwtPayload {}
@@ -48,14 +48,14 @@ class JwtHelper {
     return jwt.sign({ id, email }, this.secret, jwtOptions);
   }
 
-  generateRefreshToken({ id }: OwnRefreshJwtPayload): string {
+  generateRefreshToken({ email }: OwnRefreshJwtPayload): string {
     const jwtOptions: SignOptions = {
       algorithm: this.algorithm,
       expiresIn: this.refreshExpiresInSeconds,
       subject: REFRESH_TOKEN_SUBJECT,
     };
 
-    return jwt.sign({ id }, this.secret, jwtOptions);
+    return jwt.sign({ email }, this.secret, jwtOptions);
   }
 
   generateJwtTokens(payload: OwnJwtPayload): { access: string; refresh: string } {
