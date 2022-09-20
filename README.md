@@ -29,6 +29,7 @@ src
 ├── routes              # routes & controllers
 ├── types               # types
 ├── utils               # utility functions
+├── validation          # validation functions
 └── app.ts              # App entry point
 ```
 
