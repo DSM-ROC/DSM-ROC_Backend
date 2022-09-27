@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 
 import config from './config';
-import loadApp from './loaders';
+import loadApp from './utils';
 
 const startServer = async () => {
   const app: Application = express();
