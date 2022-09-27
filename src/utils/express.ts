@@ -7,7 +7,7 @@ import routes from '../routes';
 import errorHandler from '../middleware/error';
 import config from '../config';
 import { commonError } from '../constants/error';
-import { ErrorResponse } from '../utils/error-response';
+import { ErrorResponse } from './error-response';
 
 export default (app: Application): void => {
   app.use(express.json());
