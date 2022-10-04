@@ -1,19 +1,18 @@
-import express, { Application } from 'express';
+import 'reflect-metadata';
+import path from 'path';
+import dotenv from 'dotenv';
+import iconv from 'iconv-lite';
+import { logger } from './shared/logger';
+import { initApplication } from './loaders';
 
-import config from './config';
-import loadApp from './utils';
+iconv.encodingExists('foo');
 
-const startServer = async () => {
-  const app: Application = express();
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
-  await loadApp(app);
-  app.listen(config.port);
-};
+initApplication().catch(() => console.error('server start failed'));
 
-startServer()
-  .then(() => console.log(`Server Run on ${config.port}`))
-  .catch(e => {
-    console.error('Server Run Failed');
-    console.error(e);
-    process.exit(1);
-  });
+process.on('uncaughtException', (err: Error) => {
+  console.error(err);
+  logger.error('uncaughtException');
+  logger.error(err);
+});
