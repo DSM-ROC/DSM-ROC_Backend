@@ -1,5 +1,10 @@
 import { Router } from 'express';
+import { userServiceRouter } from './user.router';
 
-const router = Router();
+export const dsmlocRouter = () => {
+  const app = Router();
 
-export default router;
+  userServiceRouter(app);
+
+  return app;
+};

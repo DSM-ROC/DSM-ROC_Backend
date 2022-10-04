@@ -1,22 +1,20 @@
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+import databaseConfigList from './database-config';
 
-export default {
-  port: parseInt(process.env.PORT || '8080', 10),
-  api: {
-    prefix: '/api',
-  },
-  corsOptions: {
-    origin: '*',
-    methods: '*', // GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS
-    credentials: true,
-    optionsSuccessStatus: 200,
-  },
-  jwt: {
-    algorithm: process.env.JWT_ALGORITHM || 'HS256',
-    secret: process.env.JWT_SECRET || '',
-    expire: {
-      access: parseFloat(process.env.JWT_EXPIRE_ACCESS || '0'),
-      refresh: parseFloat(process.env.JWT_EXPIRE_REFRESH || '0'),
-    },
-  },
+type NodeEnvironment = 'production' | 'test' | 'development';
+
+const env: NodeEnvironment = process.env.NODE_ENV as NodeEnvironment;
+const databaseConfig = databaseConfigList[env];
+
+export const config = {
+  NodeEnv: env,
+  type: databaseConfig.type,
+  dbHost: databaseConfig.host,
+  dbPort: databaseConfig.port,
+  dbUser: databaseConfig.username,
+  dbPassword: databaseConfig.password,
+  dbName: databaseConfig.database,
+  dbSynchronize: databaseConfig.synchronize,
+  dbLogging: databaseConfig.logging,
+  jwtSecret: process.env.JWT_SECRET,
+  ServicePort: process.env.PORT,
 };
