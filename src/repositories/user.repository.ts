@@ -1,7 +1,7 @@
 import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
 
 import { User } from '../entity/user';
-import { UserInfo } from '../shared/DataTransferObject';
+import { UserInfo, UserUpdateInfo } from '../shared/DataTransferObject';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -30,5 +30,16 @@ export class UserRepository extends Repository<User> {
       .where('user.email = :email')
       .setParameter('email', email)
       .getOne();
+  }
+
+  async updateUserInfo(userUpdateInfo: UserUpdateInfo): Promise<User> {
+    const user = await this.findOne(userUpdateInfo.id);
+
+    this.merge(user, userUpdateInfo);
+    await this.save(user);
+
+    const newInfo = await this.findOne(userUpdateInfo.id);
+
+    return newInfo;
   }
 }
