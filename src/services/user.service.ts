@@ -1,15 +1,16 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../config';
-import { User } from '../entity/user';
+import { Gender, User } from '../entity/user';
 import { UserRepository } from '../repositories/user.repository';
 import {
   UpdateInfo,
   UserInfo,
   UserInfoResObj,
   UserLoginInfo,
-  UserTokenResOhj,
+  UserTokenResObj,
+  UserUpdateInfo,
 } from '../shared/DataTransferObject';
-import { BadRequestError, ConflictError, UnAuthorizedError } from '../shared/exception';
+import { BadRequestError, ConflictError, ForbiddenError, UnAuthorizedError } from '../shared/exception';
 import { comparePassword, generateHash } from '../utils/hash';
 
 export class UserService {
@@ -17,7 +18,7 @@ export class UserService {
 
   async getUser(
     id: number,
-  ): Promise<{ email: string; nickname: string; gender: string } & UpdateInfo> {
+  ): Promise<{ email: string; nickname: string; gender: Gender } & UpdateInfo> {
     const user = await this.userRepository.findUserById(id);
     if (!user) {
       throw new UnAuthorizedError();
@@ -26,14 +27,15 @@ export class UserService {
     return { email, nickname, gender, createdAt, updatedAt };
   }
 
-  async createUser(userInfo: UserInfo): Promise<{ id: number } & UpdateInfo & UserTokenResOhj> {
+
+  async createUser(userInfo: UserInfo): Promise<{ id: number } & UpdateInfo & UserTokenResObj> {
     const alreadyRegisteredUser = await this.userRepository.findUserByEmail(userInfo.email);
     if (alreadyRegisteredUser) {
       throw new ConflictError();
     }
 
     const hashedPassword = generateHash(userInfo.password);
-
+    
     const userInfoToCreate = { ...userInfo, password: hashedPassword };
     const { id, createdAt, updatedAt } = await this.userRepository.createUser(userInfoToCreate);
 
@@ -46,7 +48,7 @@ export class UserService {
     };
   }
 
-  async login({ email, password }: UserLoginInfo): Promise<UserTokenResOhj> {
+  async login({ email, password }: UserLoginInfo): Promise<UserTokenResObj> {
     const user = await this.userRepository.findUserByEmail(email);
     if (!user) {
       throw new UnAuthorizedError();
@@ -63,7 +65,27 @@ export class UserService {
     };
   }
 
-  public async refreshToken(email: string, refreshToken: string): Promise<UserTokenResOhj> {
+  async updateUserInfo(userUpdateInfo: UserUpdateInfo): Promise<UserUpdateInfo & UpdateInfo> {
+    const user = await this.userRepository.findUserById(userUpdateInfo.id);
+
+    console.log(user);
+    if(!user) {
+      throw new ForbiddenError;
+    }
+    else {
+      const { id, nickname, gender, createdAt, updatedAt } = await this.userRepository.updateUserInfo(userUpdateInfo);
+      return {
+        id,
+        nickname,
+        gender,
+        createdAt,
+        updatedAt
+      };
+    } 
+  };
+
+
+  public async refreshToken(email: string, refreshToken: string): Promise<UserTokenResObj> {
     const accessToken: string = await this.issuanceToken(email, 'access');
     return {
       access_token: accessToken,
@@ -81,9 +103,11 @@ export class UserService {
   }
 
   private async issuanceToken(email: string, type: string): Promise<string> {
+    const user = this.userRepository.findUserByEmail(email);
     return jwt.sign(
       {
         sub: `${email}`,
+        id: (await user).id,
         type,
       },
       config.jwtSecret,

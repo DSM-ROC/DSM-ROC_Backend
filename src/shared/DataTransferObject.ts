@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { Gender } from '../entity/user';
 
 export class UserLoginInfo {
   email: string;
@@ -19,7 +20,15 @@ export class UserInfo {
 
   nickname: string;
 
-  gender: string;
+  gender: Gender;
+}
+
+export class UserUpdateInfo {
+  id: number;
+
+  nickname: string;
+
+  gender: Gender;
 }
 
 export class UserInfoResObj {
@@ -29,14 +38,14 @@ export class UserInfoResObj {
 
   nickname: string;
 
-  gender: string;
+  gender: Gender;
 
   createdAt: Date;
 
   updatedAt: Date;
 }
 
-export class UserTokenResOhj {
+export class UserTokenResObj {
   access_token: string;
 
   refresh_token: string;
