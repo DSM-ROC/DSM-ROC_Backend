@@ -15,7 +15,9 @@ export const userServiceRouter = (app: Router) => {
 
   router.get('/refresh', verifyRefreshTokenMiddleware, errorHandler(userController.refreshToken));
 
-  router.get('/:email', errorHandler(userController.showUserInfo));
+  router.get('/:id', errorHandler(userController.showUserInfo));
 
   router.patch('/mypage', verifyTokenMiddleware, errorHandler(userController.updateInfo));
+
+  router.delete('/', verifyTokenMiddleware,errorHandler(userController.cancelMember));
 };
