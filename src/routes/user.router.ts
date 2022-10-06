@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/user.controller';
 import { errorHandler } from '../middlewares/errorHandler';
-import { verifyRefreshTokenMiddleware } from '../middlewares/verifyToken';
+import { verifyRefreshTokenMiddleware, verifyTokenMiddleware } from '../middlewares/verifyToken';
 
 const router: Router = Router();
 export const userServiceRouter = (app: Router) => {
   const userController: UserController = new UserController();
 
-  app.use('/users', router);
+  app.use('/user', router);
 
   router.post('/', errorHandler(userController.createUser));
 
@@ -16,4 +16,6 @@ export const userServiceRouter = (app: Router) => {
   router.get('/refresh', verifyRefreshTokenMiddleware, errorHandler(userController.refreshToken));
 
   router.get('/:email', errorHandler(userController.showUserInfo));
+
+  router.patch('/mypage', verifyTokenMiddleware, errorHandler(userController.updateInfo));
 };
