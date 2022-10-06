@@ -6,6 +6,7 @@ export const errorHandler = (myFunc: BusinessLogic): BusinessLogic => {
     try {
       await myFunc(req, res, next);
     } catch (err) {
+      console.error(err);
       logger.error(err.message);
       next(err);
     }
