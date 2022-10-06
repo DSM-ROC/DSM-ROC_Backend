@@ -84,6 +84,20 @@ export class UserService {
     } 
   };
 
+  async cancleMember(id: number, password: string): Promise<void> {
+    const user = await this.userRepository.findUserById(id);
+
+    if(!user) throw new UnAuthorizedError;
+    console.log(password, user, id)
+    const isValid = comparePassword(user.password, password);
+    if (!isValid) {
+      throw new ForbiddenError();
+    }
+     else{
+      this.userRepository.cancleMember(id);
+    }
+  }
+
 
   public async refreshToken(email: string, refreshToken: string): Promise<UserTokenResObj> {
     const accessToken: string = await this.issuanceToken(email, 'access');
