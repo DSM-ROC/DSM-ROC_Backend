@@ -1,4 +1,6 @@
 import { response } from 'express';
+import { access } from 'fs';
+import { verifyTokenOrDone } from '../middlewares/verifyTokenOrDone';
 import { UserRepository } from '../repositories/user.repository';
 import { UserService } from '../services/user.service';
 import { BusinessLogic } from '../shared/BusinessLogicInterface';
@@ -34,6 +36,14 @@ export class UserController {
     const response: UserUpdateInfo = await this.userService.updateUserInfo({ gender, nickname, id });
     res.status(200).json(response);
   }
+
+  public cancelMember: BusinessLogic = async(req, res, next) => {
+    await this.userService.cancleMember(req.decoded.id, req.body.password);
+
+    return res.status(200).send({
+      message: "회원 탈퇴되었습니다."
+    });
+  };
 
   public refreshToken: BusinessLogic = async (req, res, next) => {
     const refreshToken: string = req.headers.authorization['refresh-token'] as string;

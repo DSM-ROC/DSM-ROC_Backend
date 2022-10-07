@@ -10,7 +10,7 @@ export class UserRepository extends Repository<User> {
   }
 
   async findUserById(id: number): Promise<User> {
-    const user = await this.findOne({ id });
+    const user = await this.findOne(id);
     return user;
   }
 
@@ -41,5 +41,9 @@ export class UserRepository extends Repository<User> {
     const newInfo = await this.findOne(userUpdateInfo.id);
 
     return newInfo;
+  }
+
+  async cancleMember(id: number): Promise<void> {
+    await this.delete({ id: id });
   }
 }
