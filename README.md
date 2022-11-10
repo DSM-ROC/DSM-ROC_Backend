@@ -11,7 +11,6 @@
 - TypeScript
 - Node.js
 - Express
-- TypeDI
 - TypeORM
 - MySQL
 
