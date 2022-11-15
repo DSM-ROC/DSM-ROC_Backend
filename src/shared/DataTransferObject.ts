@@ -55,6 +55,16 @@ export class ProvideUserTokenDto {
   code: string;
 }
 
+export class ChallengeInfo {
+  name: string;
+
+  introduction: string;
+
+  limitMember: number;
+
+  password: number;
+}
+
 export const ProvideUserTokenSchema: Joi.ObjectSchema<ProvideUserTokenDto> = Joi.object().keys({
   code: Joi.string().required(),
 });
