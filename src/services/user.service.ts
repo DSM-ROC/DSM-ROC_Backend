@@ -107,8 +107,8 @@ export class UserService {
     };
   }
 
-  public async showUserInfo(email: string): Promise<UserInfoResObj> {
-    const user: User = await this.userRepository.findUserByIdentity(email);
+  public async showUserInfo(id: string): Promise<UserInfoResObj> {
+    const user =  await this.userRepository.findUserByIdentity(id);
 
     if (!user) {
       throw new BadRequestError();
