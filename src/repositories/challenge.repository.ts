@@ -22,7 +22,7 @@ export class ChallengeRepository extends Repository<Challenge> {
     };
 
     async findByName(name: string): Promise<Challenge> {
-      const challenge = await this.findOne(name);
+      const challenge = await this.findOne({name});
       return challenge;
     }
 }
