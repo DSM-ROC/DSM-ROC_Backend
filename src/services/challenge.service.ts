@@ -9,10 +9,7 @@ export class ChallengeService {
 
     async createChallenge(challengeInfo : ChallengeInfo, user: User) {
         const alreadyChallenge = await this.challengeRepository.findByName(challengeInfo.name);
-        if (alreadyChallenge) {
-          throw new ConflictError();
-        }
-
+        if (alreadyChallenge) { throw new ConflictError(); };
         return await this.challengeRepository.createChallenge(challengeInfo, user);
       }
     
