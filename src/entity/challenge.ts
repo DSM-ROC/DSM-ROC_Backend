@@ -26,6 +26,9 @@ export class Challenge {
   @Column({ nullable: true })
   password: number;
 
+  @Column({ nullable: false })
+  limitMember: number;
+
   @ManyToOne(() => User, user => user.id, { nullable: false })
   @JoinColumn({ name: 'leader' })
   leader: number;
