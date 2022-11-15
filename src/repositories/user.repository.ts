@@ -25,10 +25,10 @@ export class UserRepository extends Repository<User> {
     return createUser;
   }
 
-  async findUserByIdentity(email: string): Promise<User> {
+  async findUserByIdentity(id: string): Promise<User> {
     return this.createQueryBuilder('user')
-      .where('user.email = :email')
-      .setParameter('email', email)
+      .where('user.id = :id')
+      .setParameter('id', id)
       .getOne();
   }
 
