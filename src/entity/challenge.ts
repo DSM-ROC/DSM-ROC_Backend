@@ -20,11 +20,8 @@ export class Challenge {
   @Column({ unique: true, nullable: false, length: 15 })
   name: string;
 
-  @Column({ length: 45, nullable: true })
+  @Column({ length: 200, nullable: true })
   introduction: string;
-
-  @Column({ nullable: true })
-  password: number;
 
   @Column({ nullable: false })
   limitMember: number;
