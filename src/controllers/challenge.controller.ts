@@ -10,12 +10,21 @@ export class ChallengeController {
         ChallengeRepository.getQueryRepository()
     );
 
-    public createChallenge: BusinessLogic = async (req, res, next) => {
+    public createChallenge: BusinessLogic = async(req, res, next) => {
         const challengeInfo = req.body as ChallengeInfo;
         const user = req.decoded;
     
-        const response = await this.challengeService.createChallenge(challengeInfo, user);
+        const newChallenge = await this.challengeService.createChallenge(challengeInfo, user);
 
-        return res.status(201).json(response);
-      };
+        return res.status(201).json(newChallenge);
+    };
+
+    public searchChallenge: BusinessLogic = async(req, res, next) => {
+        const searchWord = req.query.where as string;
+        
+        const Challenge = await this.challengeService.searchChallenge(searchWord);
+
+        return res.status(200).json(Challenge);
+    }
+
 }
