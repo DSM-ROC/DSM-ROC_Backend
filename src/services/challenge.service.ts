@@ -13,4 +13,7 @@ export class ChallengeService {
         return await this.challengeRepository.createChallenge(challengeInfo, user);
       }
     
+    async searchChallenge(searchWord: string) {
+      return await this.challengeRepository.searchChallenge(searchWord);
+    }
 }

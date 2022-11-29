@@ -1,4 +1,4 @@
-import { EntityRepository, getCustomRepository, Repository } from "typeorm";
+import { EntityRepository, getCustomRepository, Like, Repository } from "typeorm";
 import { Challenge } from "../entity/challenge";
 import { User } from "../entity/user";
 import { ChallengeInfo } from "../shared/DataTransferObject";
@@ -15,14 +15,19 @@ export class ChallengeRepository extends Repository<Challenge> {
       newChallenge.name = challengeInfo.name;
       newChallenge.introduction = challengeInfo.introduction;
       newChallenge.limitMember = challengeInfo.limitMember;
-      newChallenge.password = challengeInfo.password;
       newChallenge.leader = user.id;
 
       return await this.save(newChallenge);
-    };
+    }
 
     async findByName(name: string): Promise<Challenge> {
       const challenge = await this.findOne({name});
       return challenge;
+    }
+
+    async searchChallenge(searchWord: string) {
+      return this.find({
+        where: { name: Like(`%${searchWord}%`) },
+      });
     }
 }
