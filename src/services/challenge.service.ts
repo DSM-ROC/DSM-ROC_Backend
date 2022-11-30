@@ -30,8 +30,8 @@ export class ChallengeService {
       } else throw new NotFoundError(`this challenge`);
     }
 
-    async getOneChallenge(id: number) {
-      const challenge = await this.challengeRepository.getOneChallenge(id);
+    async getOneChallenge(challengeId: number) {
+      const challenge = await this.challengeRepository.getOneChallenge(challengeId);
 
       if(challenge) return challenge;
       else throw new NotFoundError(`this challenge`);
@@ -39,5 +39,12 @@ export class ChallengeService {
   
     async getAllChallenge() {
       return await this.challengeRepository.getAllChallenge();
+    }
+
+    async getChallengeMember(challengeId: number) {
+      const challenge = await this.challengeRepository.getOneChallenge(challengeId);
+
+      if(challenge) return await this.joinRepository.getChallengeMember(challengeId);
+      else throw new NotFoundError(`this challenge`);
     }
 }
