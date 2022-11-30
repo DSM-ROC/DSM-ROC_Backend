@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../config';
-import { Gender, User } from '../entity/user';
 import { UserRepository } from '../repositories/user.repository';
 import {
   UpdateInfo,
@@ -18,13 +17,13 @@ export class UserService {
 
   async getUser(
     id: number,
-  ): Promise<{ email: string; nickname: string; gender: Gender } & UpdateInfo> {
+  ): Promise<{ email: string; nickname: string; } & UpdateInfo> {
     const user = await this.userRepository.findUserById(id);
     if (!user) {
       throw new UnAuthorizedError();
     }
-    const { email, nickname, gender, createdAt, updatedAt } = user;
-    return { email, nickname, gender, createdAt, updatedAt };
+    const { email, nickname, createdAt, updatedAt } = user;
+    return { email, nickname, createdAt, updatedAt };
   }
 
 
@@ -73,11 +72,10 @@ export class UserService {
       throw new ForbiddenError;
     }
     else {
-      const { id, nickname, gender, createdAt, updatedAt } = await this.userRepository.updateUserInfo(userUpdateInfo);
+      const { id, nickname, createdAt, updatedAt } = await this.userRepository.updateUserInfo(userUpdateInfo);
       return {
         id,
         nickname,
-        gender,
         createdAt,
         updatedAt
       };
