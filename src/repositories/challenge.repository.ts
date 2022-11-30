@@ -22,13 +22,11 @@ export class ChallengeRepository extends Repository<Challenge> {
     }
 
     async findByName(name: string): Promise<Challenge> {
-      const challenge = await this.findOne({ name });
-      return challenge;
+      return await this.findOne({ name });
     }
 
-    async findById(id: number): Promise<Challenge> {
-      const challenge = await this.findOne({ id });
-      return challenge;
+    async getOneChallenge(id: number): Promise<Challenge> {
+      return await this.findOne({ id });
     }
 
     async searchChallenge(searchWord: string) {
