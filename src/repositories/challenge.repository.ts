@@ -1,5 +1,6 @@
 import { EntityRepository, getCustomRepository, Like, Repository } from "typeorm";
 import { Challenge } from "../entity/challenge";
+import { Join } from "../entity/join";
 import { User } from "../entity/user";
 import { ChallengeInfo } from "../shared/DataTransferObject";
 
@@ -21,7 +22,12 @@ export class ChallengeRepository extends Repository<Challenge> {
     }
 
     async findByName(name: string): Promise<Challenge> {
-      const challenge = await this.findOne({name});
+      const challenge = await this.findOne({ name });
+      return challenge;
+    }
+
+    async findById(id: number): Promise<Challenge> {
+      const challenge = await this.findOne({ id });
       return challenge;
     }
 
