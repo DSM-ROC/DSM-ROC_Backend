@@ -8,12 +8,6 @@ import {
 } from 'typeorm';
 import { Join } from './join';
 
-export enum Gender {
-  woman = 'woman',
-  man = 'man',
-  etc = 'etc'
-}
-
 @Entity({ name: 'user' })
 export class User {
   @PrimaryGeneratedColumn()
@@ -27,9 +21,6 @@ export class User {
 
   @Column({ nullable: false })
   password: string;
-
-  @Column({ type: "enum", enum: Gender, default: Gender.etc, nullable: false })
-  gender: Gender;
 
   @CreateDateColumn({ name: 'createdAt' })
   createdAt: Date;
