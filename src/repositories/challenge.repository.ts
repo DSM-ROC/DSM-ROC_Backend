@@ -29,6 +29,10 @@ export class ChallengeRepository extends Repository<Challenge> {
       return await this.findOne({ id });
     }
 
+    async getAllChallenge(): Promise<Challenge[]> {
+      return await this.find();
+    }
+
     async searchChallenge(searchWord: string) {
       return this.find({
         where: { name: Like(`%${searchWord}%`) },
