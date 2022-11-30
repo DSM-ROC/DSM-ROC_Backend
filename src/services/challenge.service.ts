@@ -37,4 +37,7 @@ export class ChallengeService {
       else throw new NotFoundError(`this challenge`);
     }
   
+    async getAllChallenge() {
+      return await this.challengeRepository.getAllChallenge();
+    }
 }
