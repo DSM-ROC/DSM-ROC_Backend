@@ -21,4 +21,13 @@ export class JoinRepository extends Repository<Join> {
         const challenge = await this.findOne({ challengeId, userId: user.id })
         return challenge;
     }
+
+    async getChallengeMember(challengeId: number) {
+        return await this.createQueryBuilder('join')
+            .select('join.userId')
+            .addSelect('user.nickname')
+            .innerJoin('join.user', 'user')
+            .where('join.challengeId = :challenge_id', { challenge_id: challengeId })
+            .getMany();
+    }
 }

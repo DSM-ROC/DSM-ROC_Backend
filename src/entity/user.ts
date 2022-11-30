@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Join } from './join';
 
 export enum Gender {
   woman = 'woman',
@@ -34,4 +36,7 @@ export class User {
 
   @UpdateDateColumn({ name: 'updatedAt' })
   updatedAt: Date;
+
+  @OneToMany(() => Join, (join) => join.user)
+  join: Join[];
 };

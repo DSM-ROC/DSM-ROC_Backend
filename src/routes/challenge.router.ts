@@ -14,4 +14,5 @@ export const challengeServiceRouter = (app: Router) => {
     router.get('/search', errorHandler(challengeController.searchChallenge));
     router.post('/:challenge_id',verifyTokenMiddleware, errorHandler(challengeController.joinChallenge));
     router.get('/:challenge_id', errorHandler(challengeController.getOneChallenge));
+    router.get('/:challenge_id/member', errorHandler(challengeController.getChallengeMember));
 }
