@@ -8,7 +8,9 @@ import {
   JoinColumn,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
+import { Join } from './join';
 
 import { User } from './user';
 
@@ -36,7 +38,6 @@ export class Challenge {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToMany(() => User)
-  @JoinTable({ name: 'join' })
-  join: User;
+  @OneToMany(() => Join, (join) => join.challenge)
+  join: Join[];
 }
