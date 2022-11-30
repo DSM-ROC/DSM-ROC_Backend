@@ -28,10 +28,10 @@ export class UserController {
   };
 
   public updateInfo: BusinessLogic = async(req, res, next) => {
-    const { gender, nickname } = req.body;
+    const { nickname } = req.body;
     const id = req.decoded.id;
 
-    const response: UserUpdateInfo = await this.userService.updateUserInfo({ gender, nickname, id });
+    const response: UserUpdateInfo = await this.userService.updateUserInfo({ nickname, id });
     return res.status(200).json(response);
   }
 
