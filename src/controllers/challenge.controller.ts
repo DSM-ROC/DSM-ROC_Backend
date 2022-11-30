@@ -40,4 +40,11 @@ export class ChallengeController {
         });
     }
 
+    public getOneChallenge: BusinessLogic = async(req, res, next) => {
+        const challengeId = Number(req.params.challenge_id);
+
+        const response =  await this.challengeService.getOneChallenge(challengeId);
+
+        if(response) return res.status(200).json(response);
+    }
 }
