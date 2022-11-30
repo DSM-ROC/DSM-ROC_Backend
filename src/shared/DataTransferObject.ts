@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import { Gender } from '../entity/user';
 
 export class UserLoginInfo {
   email: string;
@@ -19,16 +18,12 @@ export class UserInfo {
   password: string;
 
   nickname: string;
-
-  gender: Gender;
 }
 
 export class UserUpdateInfo {
   id: number;
 
   nickname: string;
-
-  gender: Gender;
 }
 
 export class UserInfoResObj {
@@ -37,8 +32,6 @@ export class UserInfoResObj {
   email: string;
 
   nickname: string;
-
-  gender: Gender;
 
   createdAt: Date;
 
