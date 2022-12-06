@@ -37,7 +37,7 @@ export class Post {
 
   @UpdateDateColumn()
   updatedAt: Date;
-  
+
   @ManyToOne(() => Challenge, challenge => challenge.id, { nullable: false })
   @JoinColumn({ name: 'challengeId' })
   challenge: Challenge;
@@ -46,6 +46,6 @@ export class Post {
   @JoinColumn({ name: 'writer' })
   user: User;
 
-  @OneToMany(() => Like, (like) => like.post)
-  like: Like[];  
+  @OneToMany(() => Like, like => like.post)
+  like: Like[];
 }
