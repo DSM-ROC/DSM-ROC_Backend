@@ -5,6 +5,8 @@ import { Challenge } from './entity/challenge';
 import { Join } from './entity/join';
 import { Post } from './entity/post';
 import { Comment } from './entity/comment';
+import { Review } from './entity/review';
+import { Like } from './entity/like';
 
 export const createOptions: ConnectionOptions = {
   type: 'mysql',
@@ -15,5 +17,5 @@ export const createOptions: ConnectionOptions = {
   database: config.dbName,
   synchronize: config.dbSynchronize,
   logging: config.dbLogging,
-  entities: [User, Challenge, Join, Post, Comment],
+  entities: [User, Challenge, Join, Post, Comment, Review, Like],
 };
