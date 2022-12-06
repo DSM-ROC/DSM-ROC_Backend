@@ -1,64 +1,62 @@
-import { ChallengeRepository } from "../repositories/challenge.repository";
-import { ChallengeService } from "../services/challenge.service";
-import { Challenge } from "../entity/challenge";
-import { BusinessLogic } from "../shared/BusinessLogicInterface";
-import { UserRepository } from "../repositories/user.repository";
-import { ChallengeInfo } from "../shared/DataTransferObject";
-import { JoinRepository } from "../repositories/join.repository";
+import { ChallengeRepository } from '../repositories/challenge.repository';
+import { ChallengeService } from '../services/challenge.service';
+import { BusinessLogic } from '../shared/BusinessLogicInterface';
+import { ChallengeInfo } from '../shared/DataTransferObject';
+import { JoinRepository } from '../repositories/join.repository';
 
 export class ChallengeController {
-    private challengeService: ChallengeService = new ChallengeService(
-        ChallengeRepository.getQueryRepository(),
-        JoinRepository.getQueryRepository()
-    );
+  private challengeService: ChallengeService = new ChallengeService(
+    ChallengeRepository.getQueryRepository(),
+    JoinRepository.getQueryRepository(),
+  );
 
-    public createChallenge: BusinessLogic = async(req, res, next) => {
-        const challengeInfo = req.body as ChallengeInfo;
-        const user = req.decoded;
-    
-        const response = await this.challengeService.createChallenge(challengeInfo, user);
+  public createChallenge: BusinessLogic = async (req, res, next) => {
+    const challengeInfo = req.body as ChallengeInfo;
+    const user = req.decoded;
 
-        return res.status(201).json(response);
-    };
+    const response = await this.challengeService.createChallenge(challengeInfo, user);
 
-    public searchChallenge: BusinessLogic = async(req, res, next) => {
-        const searchWord = req.query.where as string;
-        
-        const response = await this.challengeService.searchChallenge(searchWord);
+    return res.status(201).json(response);
+  };
 
-        return res.status(200).json(response);
-    }
+  public searchChallenge: BusinessLogic = async (req, res, next) => {
+    const searchWord = req.query.where as string;
 
-    public joinChallenge: BusinessLogic = async(req, res, next) => {
-        const challengeId = Number(req.params.challenge_id);
-        const user = req.decoded;
+    const response = await this.challengeService.searchChallenge(searchWord);
 
-        await this.challengeService.joinChallenge(challengeId, user);
+    return res.status(200).json(response);
+  };
 
-        return res.status(201).json({
-            message : 'joinChallenge success'
-        });
-    }
+  public joinChallenge: BusinessLogic = async (req, res, next) => {
+    const challengeId = Number(req.params.challenge_id);
+    const user = req.decoded;
 
-    public getOneChallenge: BusinessLogic = async(req, res, next) => {
-        const challengeId = Number(req.params.challenge_id);
+    await this.challengeService.joinChallenge(challengeId, user);
 
-        const response =  await this.challengeService.getOneChallenge(challengeId);
+    return res.status(201).json({
+      message: 'joinChallenge success',
+    });
+  };
 
-        return res.status(200).json(response);
-    }
+  public getOneChallenge: BusinessLogic = async (req, res, next) => {
+    const challengeId = Number(req.params.challenge_id);
 
-    public getAllChallenge: BusinessLogic = async(req, res, next) => {
-        const response = await this.challengeService.getAllChallenge();
+    const response = await this.challengeService.getOneChallenge(challengeId);
 
-        return res.status(200).json(response);
-    }
+    return res.status(200).json(response);
+  };
 
-    public getChallengeMember: BusinessLogic = async(req, res, next) => {
-        const challengeId = Number(req.params.challenge_id);
+  public getAllChallenge: BusinessLogic = async (req, res, next) => {
+    const response = await this.challengeService.getAllChallenge();
 
-        const response = await this.challengeService.getChallengeMember(challengeId);
+    return res.status(200).json(response);
+  };
 
-        return res.status(200).json(response);
-    }
+  public getChallengeMember: BusinessLogic = async (req, res, next) => {
+    const challengeId = Number(req.params.challenge_id);
+
+    const response = await this.challengeService.getChallengeMember(challengeId);
+
+    return res.status(200).json(response);
+  };
 }

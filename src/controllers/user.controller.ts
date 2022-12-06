@@ -1,4 +1,3 @@
-import { verifyTokenOrDone } from '../middlewares/verifyTokenOrDone';
 import { UserRepository } from '../repositories/user.repository';
 import { UserService } from '../services/user.service';
 import { BusinessLogic } from '../shared/BusinessLogicInterface';
@@ -27,19 +26,19 @@ export class UserController {
     return res.status(200).json(response);
   };
 
-  public updateInfo: BusinessLogic = async(req, res, next) => {
+  public updateInfo: BusinessLogic = async (req, res, next) => {
     const { nickname } = req.body;
-    const id = req.decoded.id;
+    const { id } = req.decoded;
 
     const response: UserUpdateInfo = await this.userService.updateUserInfo({ nickname, id });
     return res.status(200).json(response);
-  }
+  };
 
-  public cancelMember: BusinessLogic = async(req, res, next) => {
+  public cancelMember: BusinessLogic = async (req, res, next) => {
     await this.userService.cancleMember(req.decoded.id, req.body.password);
 
     return res.status(200).send({
-      message: "회원 탈퇴되었습니다."
+      message: '회원 탈퇴되었습니다.',
     });
   };
 
