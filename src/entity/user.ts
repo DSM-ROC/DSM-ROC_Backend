@@ -31,12 +31,12 @@ export class User {
   @UpdateDateColumn({ name: 'updatedAt' })
   updatedAt: Date;
 
-  @OneToMany(() => Join, (join) => join.user)
+  @OneToMany(() => Join, join => join.user)
   join: Join[];
 
-  @OneToMany(() => Review, (review) => review.user)
+  @OneToMany(() => Review, review => review.user)
   review: Review[];
 
-  @OneToMany(() => Like, (like) => like.user)
+  @OneToMany(() => Like, like => like.user)
   like: Like[];
-};
+}
