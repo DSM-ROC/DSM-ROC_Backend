@@ -10,11 +10,11 @@ export class Join {
   @PrimaryColumn()
   userId: number;
 
-  @ManyToOne(() => User, (user) => user.join)
+  @ManyToOne(() => User, user => user.join)
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @ManyToOne(() => Challenge, (challenge) => challenge.join)
+  @ManyToOne(() => Challenge, challenge => challenge.join)
   @JoinColumn({ name: 'challengeId' })
   challenge: Challenge;
 }

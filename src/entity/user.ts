@@ -28,6 +28,6 @@ export class User {
   @UpdateDateColumn({ name: 'updatedAt' })
   updatedAt: Date;
 
-  @OneToMany(() => Join, (join) => join.user)
+  @OneToMany(() => Join, join => join.user)
   join: Join[];
-};
+}
