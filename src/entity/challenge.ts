@@ -27,7 +27,7 @@ export class Challenge {
   @Column({ nullable: false })
   limitMember: number;
 
-  @Column({ type: "enum", enum: Topic, default: Topic.etc, nullable: false })
+  @Column({ type: 'enum', enum: Topic, default: Topic.etc, nullable: false })
   topic: Topic;
 
   @Column()
@@ -39,10 +39,10 @@ export class Challenge {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Join, (join) => join.challenge)
+  @OneToMany(() => Join, join => join.challenge)
   join: Join[];
-  
-  @OneToMany(() => Review, (review) => review.challenge)
+
+  @OneToMany(() => Review, review => review.challenge)
   review: Review[];
 
   @ManyToOne(() => User, user => user.id, { nullable: false })
