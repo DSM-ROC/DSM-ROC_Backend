@@ -1,5 +1,4 @@
 import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
-
 import { User } from '../entity/user';
 import { UserInfo, UserUpdateInfo } from '../shared/DataTransferObject';
 
@@ -26,10 +25,7 @@ export class UserRepository extends Repository<User> {
   }
 
   async findUserByIdentity(id: string): Promise<User> {
-    return this.createQueryBuilder('user')
-      .where('user.id = :id')
-      .setParameter('id', id)
-      .getOne();
+    return this.createQueryBuilder('user').where('user.id = :id').setParameter('id', id).getOne();
   }
 
   async updateUserInfo(userUpdateInfo: UserUpdateInfo): Promise<User> {
@@ -44,6 +40,6 @@ export class UserRepository extends Repository<User> {
   }
 
   async cancleMember(id: number): Promise<void> {
-    await this.delete({ id: id });
+    await this.delete({ id });
   }
 }
