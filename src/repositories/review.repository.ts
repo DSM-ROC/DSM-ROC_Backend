@@ -17,4 +17,16 @@ export class ReviewRepository extends Repository<Review> {
 
         return await this.save(newReview);
     }
+
+    async updateReview(reviewId: number, review: string, user: User) {
+        const newReview = await this.update({
+            id: reviewId, 
+            userId: user.id
+        }, {
+            text: review
+        });
+        
+        return newReview;
+    }
+
 }
