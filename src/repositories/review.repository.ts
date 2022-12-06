@@ -48,4 +48,20 @@ export class ReviewRepository extends Repository<Review> {
 
     return review;
   }
+
+  async getMyReview(user: User) {
+    const review = await this.findOne({
+      userId: user.id,
+    });
+
+    return review;
+  }
+
+  async getAllReview(challengeId: number) {
+    const review = await this.findOne({
+      challengeId,
+    });
+
+    return review;
+  }
 }
