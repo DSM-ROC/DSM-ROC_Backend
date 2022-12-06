@@ -29,4 +29,13 @@ export class ReviewRepository extends Repository<Review> {
         return newReview;
     }
 
+    async deleteReview(reviewId: number, user: User) {
+        const review = await this.delete({
+            id: reviewId, 
+            userId: user.id
+        });
+        
+        return review;
+    }
+
 }
