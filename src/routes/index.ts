@@ -3,10 +3,10 @@ import { userServiceRouter } from './user.router';
 import { challengeServiceRouter } from './challenge.router';
 
 export const dsmlocRouter = () => {
-  const app = Router();
+	const app = Router();
 
-  userServiceRouter(app);
-  challengeServiceRouter(app);
+	userServiceRouter(app);
+	challengeServiceRouter(app);
 
-  return app;
+	return app;
 };

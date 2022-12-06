@@ -12,7 +12,7 @@ dotenv.config({ path: path.join(__dirname, '../.env') });
 initApplication().catch(() => console.error('server start failed'));
 
 process.on('uncaughtException', (err: Error) => {
-  console.error(err);
-  logger.error('uncaughtException');
-  logger.error(err);
+	console.error(err);
+	logger.error('uncaughtException');
+	logger.error(err);
 });
