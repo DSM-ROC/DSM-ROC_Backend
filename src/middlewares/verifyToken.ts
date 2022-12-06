@@ -33,7 +33,9 @@ const verifyTokenLogic: (type: string, headers: string) => BusinessLogic =
 const verifyTokenMiddleware: BusinessLogic = errorHandler(
   verifyTokenLogic('access', 'authorization'),
 );
+
 const verifyRefreshTokenMiddleware: BusinessLogic = errorHandler(
   verifyTokenLogic('refresh', 'refresh-token'),
 );
+
 export { verifyTokenMiddleware, verifyRefreshTokenMiddleware };
