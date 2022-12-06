@@ -38,4 +38,11 @@ export class ReviewRepository extends Repository<Review> {
         return review;
     }
 
+    async getOneReview(reviewId: number) {
+        const review = await this.findOne({
+            id: reviewId,
+        });
+        
+        return review;
+    }
 }
