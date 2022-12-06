@@ -32,11 +32,11 @@ export class Review {
   @UpdateDateColumn({ name: 'updatedAt' })
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.review)
+  @ManyToOne(() => User, user => user.review)
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @ManyToOne(() => Challenge, (challenge) => challenge.review)
+  @ManyToOne(() => Challenge, challenge => challenge.review)
   @JoinColumn({ name: 'challengeId' })
   challenge: Challenge;
-};
+}
