@@ -19,5 +19,5 @@ export const userServiceRouter = (app: Router) => {
 
   router.patch('/mypage', verifyTokenMiddleware, errorHandler(userController.updateInfo));
 
-  router.delete('/', verifyTokenMiddleware,errorHandler(userController.cancelMember));
+  router.delete('/', verifyTokenMiddleware, errorHandler(userController.cancelMember));
 };
