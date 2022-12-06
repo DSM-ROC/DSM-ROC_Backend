@@ -9,15 +9,18 @@ import {
   UserTokenResObj,
   UserUpdateInfo,
 } from '../shared/DataTransferObject';
-import { BadRequestError, ConflictError, ForbiddenError, UnAuthorizedError } from '../shared/exception';
+import {
+  BadRequestError,
+  ConflictError,
+  ForbiddenError,
+  UnAuthorizedError,
+} from '../shared/exception';
 import { comparePassword, generateHash } from '../utils/hash';
 
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
-  async getUser(
-    id: number,
-  ): Promise<{ email: string; nickname: string; } & UpdateInfo> {
+  async getUser(id: number): Promise<{ email: string; nickname: string } & UpdateInfo> {
     const user = await this.userRepository.findUserById(id);
     if (!user) {
       throw new UnAuthorizedError();
@@ -26,7 +29,6 @@ export class UserService {
     return { email, nickname, createdAt, updatedAt };
   }
 
-
   async createUser(userInfo: UserInfo): Promise<{ id: number } & UpdateInfo & UserTokenResObj> {
     const alreadyRegisteredUser = await this.userRepository.findUserByEmail(userInfo.email);
     if (alreadyRegisteredUser) {
@@ -34,7 +36,7 @@ export class UserService {
     }
 
     const hashedPassword = generateHash(userInfo.password);
-    
+
     const userInfoToCreate = { ...userInfo, password: hashedPassword };
     const { id, createdAt, updatedAt } = await this.userRepository.createUser(userInfoToCreate);
 
@@ -68,34 +70,33 @@ export class UserService {
     const user = await this.userRepository.findUserById(userUpdateInfo.id);
 
     console.log(user);
-    if(!user) {
-      throw new ForbiddenError;
-    }
-    else {
-      const { id, nickname, createdAt, updatedAt } = await this.userRepository.updateUserInfo(userUpdateInfo);
+    if (!user) {
+      throw new ForbiddenError();
+    } else {
+      const { id, nickname, createdAt, updatedAt } = await this.userRepository.updateUserInfo(
+        userUpdateInfo,
+      );
       return {
         id,
         nickname,
         createdAt,
-        updatedAt
+        updatedAt,
       };
-    } 
-  };
+    }
+  }
 
   async cancleMember(id: number, password: string): Promise<void> {
     const user = await this.userRepository.findUserById(id);
 
-    if(!user) throw new UnAuthorizedError;
-    console.log(password, user, id)
+    if (!user) throw new UnAuthorizedError();
+    console.log(password, user, id);
     const isValid = comparePassword(user.password, password);
     if (!isValid) {
       throw new ForbiddenError();
-    }
-     else{
+    } else {
       this.userRepository.cancleMember(id);
     }
   }
-
 
   public async refreshToken(email: string, refreshToken: string): Promise<UserTokenResObj> {
     const accessToken: string = await this.issuanceToken(email, 'access');
@@ -106,7 +107,7 @@ export class UserService {
   }
 
   public async showUserInfo(id: string): Promise<UserInfoResObj> {
-    const user =  await this.userRepository.findUserByIdentity(id);
+    const user = await this.userRepository.findUserByIdentity(id);
 
     if (!user) {
       throw new BadRequestError();
