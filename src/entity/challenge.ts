@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Topic } from './enum/topic.enum';
 import { Join } from './join';
+import { Review } from './review';
 import { User } from './user';
 
 @Entity({ name: 'challenge' })
@@ -29,8 +30,7 @@ export class Challenge {
   @Column({ type: 'enum', enum: Topic, default: Topic.etc, nullable: false })
   topic: Topic;
 
-  @ManyToOne(() => User, user => user.id, { nullable: false })
-  @JoinColumn({ name: 'leader' })
+  @Column()
   leader: number;
 
   @CreateDateColumn()
@@ -41,4 +41,11 @@ export class Challenge {
 
   @OneToMany(() => Join, join => join.challenge)
   join: Join[];
+
+  @OneToMany(() => Review, review => review.challenge)
+  review: Review[];
+
+  @ManyToOne(() => User, user => user.id, { nullable: false })
+  @JoinColumn({ name: 'leader' })
+  user: User;
 }

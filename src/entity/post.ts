@@ -6,24 +6,24 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { Challenge } from './challenge';
 import { User } from './user';
+import { Like } from './like';
 
 @Entity({ name: 'post' })
 export class Post {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Challenge, challenge => challenge.id, { nullable: false })
-  @JoinColumn({ name: 'challengeId' })
+  @Column()
   challengeId: number;
 
-  @ManyToOne(() => User, user => user.id, { nullable: false })
-  @JoinColumn({ name: 'writer' })
+  @Column()
   writer: number;
 
   @Column({ nullable: false, length: 20 })
@@ -38,7 +38,14 @@ export class Post {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToMany(() => User)
-  @JoinTable({ name: 'like' })
-  like: User;
+  @ManyToOne(() => Challenge, challenge => challenge.id, { nullable: false })
+  @JoinColumn({ name: 'challengeId' })
+  challenge: Challenge;
+
+  @ManyToOne(() => User, user => user.id, { nullable: false })
+  @JoinColumn({ name: 'writer' })
+  user: User;
+
+  @OneToMany(() => Like, like => like.post)
+  like: Like[];
 }

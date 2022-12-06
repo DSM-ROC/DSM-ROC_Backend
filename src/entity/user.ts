@@ -6,7 +6,10 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
+
 import { Join } from './join';
+import { Like } from './like';
+import { Review } from './review';
 
 @Entity({ name: 'user' })
 export class User {
@@ -30,4 +33,10 @@ export class User {
 
   @OneToMany(() => Join, join => join.user)
   join: Join[];
+
+  @OneToMany(() => Review, review => review.user)
+  review: Review[];
+
+  @OneToMany(() => Like, like => like.user)
+  like: Like[];
 }

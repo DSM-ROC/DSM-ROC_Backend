@@ -16,12 +16,10 @@ export class Comment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Post, post => post.id, { nullable: false })
-  @JoinColumn({ name: 'postId' })
+  @Column()
   postId: number;
 
-  @ManyToOne(() => User, user => user.id, { nullable: false })
-  @JoinColumn({ name: 'writer' })
+  @Column()
   writer: number;
 
   @Column({ nullable: false })
@@ -32,4 +30,12 @@ export class Comment {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToOne(() => User, user => user.id, { nullable: false })
+  @JoinColumn({ name: 'writer' })
+  user: User;
+
+  @ManyToOne(() => Post, post => post.id, { nullable: false })
+  @JoinColumn({ name: 'postId' })
+  post: Post;
 }
