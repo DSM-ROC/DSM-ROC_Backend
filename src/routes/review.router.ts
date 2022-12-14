@@ -29,4 +29,10 @@ export const reviewServiceRouter = (app: Router) => {
 		verifyTokenMiddleware,
 		errorHandler(reviewController.getAllReview),
 	);
+
+	router.get(
+		'/:challenge_id/review/:review_id',
+		verifyTokenMiddleware,
+		errorHandler(reviewController.getOneReview),
+	);
 };
