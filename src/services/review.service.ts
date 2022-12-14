@@ -20,10 +20,21 @@ export class ReviewService {
         const check = await this.joinRepository.checkChallenge(challengeId, user);
 
         if(check) {
-            if(! await this.reviewRepository.checkReview(reviewId, user)) throw new ForbiddenError;
-            if(! await this.reviewRepository.getOneReview(reviewId)) throw new NotFoundError;
+            if(!await this.reviewRepository.checkReview(reviewId, user)) throw new ForbiddenError;
+            if(!await this.reviewRepository.getOneReview(reviewId)) throw new NotFoundError;
             
             return this.reviewRepository.updateReview(reviewId, review, user)
+        } else throw new ForbiddenError;
+    }
+
+    async deleteReview(challengeId: number, reviewId: number, user: User) {
+        const check = await this.joinRepository.checkChallenge(challengeId, user);
+
+        if(check) {
+            if(!await this.reviewRepository.checkReview(reviewId, user)) throw new ForbiddenError;
+            if(!await this.reviewRepository.getOneReview(reviewId)) throw new NotFoundError;
+
+            return this.reviewRepository.deleteReview(reviewId, user);
         } else throw new ForbiddenError;
     }
 }
