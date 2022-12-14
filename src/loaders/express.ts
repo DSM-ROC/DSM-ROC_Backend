@@ -5,7 +5,7 @@ import cors from 'cors';
 import { ServerResponse } from 'http';
 import { config } from '../config';
 import { dsmlocRouter } from '../routes';
-import { HttpError, NotFoundError } from '../shared/exception';
+import { HttpError, NotFoundURLError } from '../shared/exception';
 import { logger } from '../shared/logger';
 
 export const loadExpress = (app: Application) => {
@@ -30,7 +30,7 @@ export const loadExpress = (app: Application) => {
   app.use('/', dsmlocRouter());
 
   app.use((req: Request, res: Response, next: NextFunction) => {
-    next(new NotFoundError(req.url));
+    next(new NotFoundURLError(req.url));
   });
 
   app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
