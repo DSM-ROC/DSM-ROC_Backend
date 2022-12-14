@@ -11,5 +11,6 @@ export const  reviewServiceRouter = (app: Router) => {
 
     router.post('/:challenge_id/review', verifyTokenMiddleware, errorHandler(reviewController.createReview));
     router.patch('/:challenge_id/review/:review_id', verifyTokenMiddleware, errorHandler(reviewController.updateReview));
+    router.delete('/:challenge_id/review/:review_id', verifyTokenMiddleware, errorHandler(reviewController.deleteReview));
     
 }
