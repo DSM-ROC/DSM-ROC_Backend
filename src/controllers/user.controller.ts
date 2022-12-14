@@ -1,3 +1,4 @@
+import { JoinRepository } from '../repositories/join.repository';
 import { UserRepository } from '../repositories/user.repository';
 import { UserService } from '../services/user.service';
 import { BusinessLogic } from '../shared/BusinessLogicInterface';
@@ -10,7 +11,10 @@ import {
 } from '../shared/DataTransferObject';
 
 export class UserController {
-  private userService: UserService = new UserService(UserRepository.getQueryRepository());
+  private userService: UserService = new UserService(
+    UserRepository.getQueryRepository(),
+    JoinRepository.getQueryRepository(),
+  );
 
   public createUser: BusinessLogic = async (req, res, next) => {
     const userInfoToCreate = req.body as UserInfo;
