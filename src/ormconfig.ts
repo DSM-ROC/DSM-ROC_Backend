@@ -18,4 +18,6 @@ export const createOptions: ConnectionOptions = {
   synchronize: config.dbSynchronize,
   logging: config.dbLogging,
   entities: [User, Challenge, Join, Post, Comment, Review, Like],
+  dateStrings: true,
+  charset: 'utf8mb4',
 };
