@@ -10,7 +10,7 @@ export class ReviewService {
 		const check = await this.joinRepository.checkChallenge(challengeId, user);
 
 		if (check) return this.reviewRepository.createReview(challengeId, review, user);
-		else throw new ForbiddenError();
+		throw new ForbiddenError();
 	}
 
 	async updateReview(challengeId: number, reviewId: number, review: string, user: User) {
@@ -18,10 +18,12 @@ export class ReviewService {
 
 		if (check) {
 			if (!(await this.reviewRepository.checkReview(reviewId, user))) throw new ForbiddenError();
-			if (!(await this.reviewRepository.getOneReview(reviewId))) throw new NotFoundError();
+			if (!(await this.reviewRepository.getOneReview(challengeId, reviewId)))
+				throw new NotFoundError();
 
 			return this.reviewRepository.updateReview(reviewId, review, user);
-		} else throw new ForbiddenError();
+		}
+		throw new ForbiddenError();
 	}
 
 	async deleteReview(challengeId: number, reviewId: number, user: User) {
@@ -29,16 +31,30 @@ export class ReviewService {
 
 		if (check) {
 			if (!(await this.reviewRepository.checkReview(reviewId, user))) throw new ForbiddenError();
-			if (!(await this.reviewRepository.getOneReview(reviewId))) throw new NotFoundError();
+			if (!(await this.reviewRepository.getOneReview(challengeId, reviewId)))
+				throw new NotFoundError();
 
 			return this.reviewRepository.deleteReview(reviewId, user);
-		} else throw new ForbiddenError();
+		}
+		throw new ForbiddenError();
 	}
 
 	async getAllReview(challengeId: number, user: User) {
 		const check = await this.joinRepository.checkChallenge(challengeId, user);
 
 		if (check) return this.reviewRepository.getAllReview(challengeId);
-		else throw new ForbiddenError();
+		throw new ForbiddenError();
+	}
+
+	async getOneReview(challengeId: number, reviewId: number, user: User) {
+		const check = await this.joinRepository.checkChallenge(challengeId, user);
+
+		if (check) {
+			if (!(await this.reviewRepository.getOneReview(challengeId, reviewId)))
+				throw new NotFoundError();
+
+			return this.reviewRepository.getOneReview(challengeId, reviewId);
+		}
+		throw new ForbiddenError();
 	}
 }
