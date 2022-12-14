@@ -41,27 +41,47 @@ export class ReviewRepository extends Repository<Review> {
     return review;
   }
 
-  async getOneReview(reviewId: number) {
-    const review = await this.findOne({
-      id: reviewId,
-    });
+  async checkReview(reviewId: number, user: User) {
+    return await this.findOne({ id: reviewId, userId: user.id });
+  }
 
-    return review;
+  async getOneReview(reviewId: number) {
+    return await this.findOne({ id: reviewId });
   }
 
   async getMyReview(user: User) {
-    const review = await this.findOne({
-      userId: user.id,
-    });
-
-    return review;
+    return await this.findOne({ userId: user.id });
   }
 
   async getAllReview(challengeId: number) {
-    const review = await this.findOne({
-      challengeId,
-    });
+    return await this.findOne({ challengeId });
+  }
 
-    return review;
+  async getOneMonthReview(challengeId: number, date: Date) {
+    return this.createQueryBuilder('review')
+      .select('review.uesrId')
+      .addSelect('review.challengeId')
+      .addSelect('review.text')
+      .addSelect('user.nickname')
+      .addSelect('review.createdAt')
+      .addSelect('review.updatedAt')
+      .innerJoin('review.user', 'user')
+      .where('MONTH(review.createdAt) == MONTH(:date)', { date })
+      .andWhere('review.challengeId = :challengeId', { challengeId })
+      .getMany();
+  }
+
+  async getDate(challengeId: number, user: User) {
+    return this.createQueryBuilder('review')
+    .select('review.userId')
+    .addSelect('review.challengeId')
+    .addSelect(`DATE_FORMAT(review.createdAt, '%Y-%m-%d') AS review.createdAt`)
+    .addSelect('review.updatedAt')
+    .addSelect('user.nickname')
+    .addSelect('review.text')
+    .innerJoin('review.user', 'user')
+    .where('review.userId == :userId AND review.challengeId == :challengeId', 
+      { userId : user.id, challengeId })
+    .getMany()
   }
 }
