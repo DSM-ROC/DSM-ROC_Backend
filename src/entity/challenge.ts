@@ -1,12 +1,12 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
-  OneToMany,
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	CreateDateColumn,
+	UpdateDateColumn,
+	ManyToOne,
+	JoinColumn,
+	OneToMany,
 } from 'typeorm';
 import { Topic } from './enum/topic.enum';
 import { Join } from './join';
@@ -15,37 +15,37 @@ import { User } from './user';
 
 @Entity({ name: 'challenge' })
 export class Challenge {
-  @PrimaryGeneratedColumn()
-  id: number;
+	@PrimaryGeneratedColumn()
+	id: number;
 
-  @Column({ unique: true, nullable: false, length: 15 })
-  name: string;
+	@Column({ unique: true, nullable: false, length: 15 })
+	name: string;
 
-  @Column({ length: 200, nullable: true })
-  introduction: string;
+	@Column({ length: 200, nullable: true })
+	introduction: string;
 
-  @Column({ nullable: false })
-  limitMember: number;
+	@Column({ nullable: false })
+	limitMember: number;
 
-  @Column({ type: 'enum', enum: Topic, default: Topic.etc, nullable: false })
-  topic: Topic;
+	@Column({ type: 'enum', enum: Topic, default: Topic.etc, nullable: false })
+	topic: Topic;
 
-  @Column()
-  leader: number;
+	@Column()
+	leader: number;
 
-  @CreateDateColumn()
-  createdAt: Date;
+	@CreateDateColumn()
+	createdAt: Date;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+	@UpdateDateColumn()
+	updatedAt: Date;
 
-  @OneToMany(() => Join, join => join.challenge)
-  join: Join[];
+	@OneToMany(() => Join, join => join.challenge)
+	join: Join[];
 
-  @OneToMany(() => Review, review => review.challenge)
-  review: Review[];
+	@OneToMany(() => Review, review => review.challenge)
+	review: Review[];
 
-  @ManyToOne(() => User, user => user.id, { nullable: false })
-  @JoinColumn({ name: 'leader' })
-  user: User;
+	@ManyToOne(() => User, user => user.id, { nullable: false })
+	@JoinColumn({ name: 'leader' })
+	user: User;
 }
