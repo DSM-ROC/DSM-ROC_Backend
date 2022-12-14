@@ -34,9 +34,15 @@ export class ForbiddenError extends HttpError {
   }
 }
 
-export class NotFoundError extends HttpError {
+export class NotFoundURLError extends HttpError {
   constructor(url: string) {
     super(404, `Not Found ${url}`);
+  }
+}
+
+export class NotFoundError extends HttpError {
+  constructor() {
+    super(404, `Not Found`);
   }
 }
 
