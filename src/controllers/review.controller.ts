@@ -10,7 +10,7 @@ export class ReviewController {
 	);
 
 	public createReview: BusinessLogic = async (req, res, next) => {
-		const review = req.body.review;
+		const { review } = req.body;
 		const challengeId = Number(req.params.challenge_id);
 		const user = req.decoded;
 
@@ -20,7 +20,7 @@ export class ReviewController {
 	};
 
 	public updateReview: BusinessLogic = async (req, res, next) => {
-		const review = req.body.review;
+		const { review } = req.body;
 		const challengeId = Number(req.params.challenge_id);
 		const reviewId = Number(req.params.review_id);
 		const user = req.decoded;
@@ -45,6 +45,16 @@ export class ReviewController {
 		const user = req.decoded;
 
 		const response = await this.reviewService.getAllReview(challengeId, user);
+
+		return res.status(200).json(response);
+	};
+
+	public getOneReview: BusinessLogic = async (req, res, next) => {
+		const challengeId = Number(req.params.challenge_id);
+		const reviewId = Number(req.params.review_id);
+		const user = req.decoded;
+
+		const response = await this.reviewService.getOneReview(challengeId, reviewId, user);
 
 		return res.status(200).json(response);
 	};
