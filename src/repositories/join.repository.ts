@@ -4,30 +4,30 @@ import { User } from '../entity/user';
 
 @EntityRepository(Join)
 export class JoinRepository extends Repository<Join> {
-  static getQueryRepository() {
-    return getCustomRepository(JoinRepository);
-  }
+	static getQueryRepository() {
+		return getCustomRepository(JoinRepository);
+	}
 
-  async JoinChallenge(challengeId: number, user: User) {
-    const join = new Join();
+	async JoinChallenge(challengeId: number, user: User) {
+		const join = new Join();
 
-    join.challengeId = challengeId;
-    join.userId = user.id;
+		join.challengeId = challengeId;
+		join.userId = user.id;
 
-    return this.save(join);
-  }
+		return this.save(join);
+	}
 
-  async checkChallenge(challengeId: number, user: User) {
-    const challenge = await this.findOne({ challengeId, userId: user.id });
-    return challenge;
-  }
+	async checkChallenge(challengeId: number, user: User) {
+		const challenge = await this.findOne({ challengeId, userId: user.id });
+		return challenge;
+	}
 
-  async getChallengeMember(challengeId: number) {
-    return this.createQueryBuilder('join')
-      .select('join.userId')
-      .addSelect('user.nickname')
-      .innerJoin('join.user', 'user')
-      .where('join.challengeId = :challenge_id', { challenge_id: challengeId })
-      .getMany();
-  }
+	async getChallengeMember(challengeId: number) {
+		return this.createQueryBuilder('join')
+			.select('join.userId')
+			.addSelect('user.nickname')
+			.innerJoin('join.user', 'user')
+			.where('join.challengeId = :challenge_id', { challenge_id: challengeId })
+			.getMany();
+	}
 }

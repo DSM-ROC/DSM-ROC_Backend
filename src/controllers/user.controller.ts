@@ -13,7 +13,6 @@ import {
 export class UserController {
   private userService: UserService = new UserService(
     UserRepository.getQueryRepository(),
-    JoinRepository.getQueryRepository(),
   );
 
   public createUser: BusinessLogic = async (req, res, next) => {

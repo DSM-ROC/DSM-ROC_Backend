@@ -1,53 +1,53 @@
 export class HttpError extends Error {
-  public statusCode: number;
+	public statusCode: number;
 
-  public message: string;
+	public message: string;
 
-  constructor(statusCode: number, message: string) {
-    super(message);
-    this.statusCode = statusCode;
-    this.message = message;
-  }
+	constructor(statusCode: number, message: string) {
+		super(message);
+		this.statusCode = statusCode;
+		this.message = message;
+	}
 }
 
 export class UnAuthorizedError extends HttpError {
-  constructor() {
-    super(401, 'Unauthorized');
-  }
+	constructor() {
+		super(401, 'Unauthorized');
+	}
 }
 
 export class ConflictError extends HttpError {
-  constructor() {
-    super(409, 'Conflict');
-  }
+	constructor() {
+		super(409, 'Conflict');
+	}
 }
 
 export class ExpiredTokenError extends HttpError {
-  constructor() {
-    super(401, 'Expired Token');
-  }
+	constructor() {
+		super(401, 'Expired Token');
+	}
 }
 
 export class ForbiddenError extends HttpError {
-  constructor() {
-    super(403, 'Forbidden Request');
-  }
+	constructor() {
+		super(403, 'Forbidden Request');
+	}
 }
 
 export class NotFoundError extends HttpError {
-  constructor(url: string) {
-    super(404, `Not Found ${url}`);
-  }
+	constructor(url: string) {
+		super(404, `Not Found ${url}`);
+	}
 }
 
 export class BadRequestError extends HttpError {
-  constructor(message = 'Bad Request') {
-    super(400, message);
-  }
+	constructor(message = 'Bad Request') {
+		super(400, message);
+	}
 }
 
 export class InternalServerError extends HttpError {
-  constructor() {
-    super(500, 'Interal Server Error');
-  }
+	constructor() {
+		super(500, 'Interal Server Error');
+	}
 }

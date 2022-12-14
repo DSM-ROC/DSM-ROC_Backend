@@ -1,63 +1,50 @@
 import Joi from 'joi';
 
 export class UserLoginInfo {
-  email: string;
-
-  password: string;
+	email: string;
+	password: string;
 }
 
 export class UpdateInfo {
-  createdAt: Date;
-
-  updatedAt: Date;
+	createdAt: Date;
+	updatedAt: Date;
 }
 
 export class UserInfo {
-  email: string;
-
-  password: string;
-
-  nickname: string;
+	email: string;
+	password: string;
+	nickname: string;
 }
 
 export class UserUpdateInfo {
-  id: number;
-
-  nickname: string;
+	id: number;
+	nickname: string;
 }
 
 export class UserInfoResObj {
-  id: number;
-
-  email: string;
-
-  nickname: string;
-
-  createdAt: Date;
-
-  updatedAt: Date;
+	id: number;
+	email: string;
+	nickname: string;
+	createdAt: Date;
+	updatedAt: Date;
 }
 
 export class UserTokenResObj {
-  access_token: string;
-
-  refresh_token: string;
+	access_token: string;
+	refresh_token: string;
 }
 
 export class ProvideUserTokenDto {
-  code: string;
+	code: string;
 }
 
 export class ChallengeInfo {
-  name: string;
-
-  introduction: string;
-
-  limitMember: number;
-
-  password: number;
+	name: string;
+	introduction: string;
+	limitMember: number;
+	password: number;
 }
 
 export const ProvideUserTokenSchema: Joi.ObjectSchema<ProvideUserTokenDto> = Joi.object().keys({
-  code: Joi.string().required(),
+	code: Joi.string().required(),
 });
