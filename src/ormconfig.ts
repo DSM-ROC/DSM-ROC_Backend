@@ -9,13 +9,15 @@ import { Review } from './entity/review';
 import { Like } from './entity/like';
 
 export const createOptions: ConnectionOptions = {
-	type: 'mysql',
-	host: config.dbHost,
-	port: config.dbPort,
-	username: config.dbUser,
-	password: config.dbPassword,
-	database: config.dbName,
-	synchronize: config.dbSynchronize,
-	logging: config.dbLogging,
-	entities: [User, Challenge, Join, Post, Comment, Review, Like],
+  type: 'mysql',
+  host: config.dbHost,
+  port: config.dbPort,
+  username: config.dbUser,
+  password: config.dbPassword,
+  database: config.dbName,
+  synchronize: config.dbSynchronize,
+  logging: config.dbLogging,
+  entities: [User, Challenge, Join, Post, Comment, Review, Like],
+  dateStrings: true,
+  charset: 'utf8mb4',
 };
