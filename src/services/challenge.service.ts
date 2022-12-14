@@ -28,14 +28,14 @@ export class ChallengeService {
 			if (!(await this.joinRepository.checkChallenge(challengeId, user))) {
 				this.joinRepository.JoinChallenge(challengeId, user);
 			} else throw new ConflictError();
-		} else throw new NotFoundError(`this challenge`);
+		} else throw new NotFoundError();
 	}
 
 	async getOneChallenge(challengeId: number) {
 		const challenge = await this.challengeRepository.getOneChallenge(challengeId);
 
 		if (challenge) return challenge;
-		throw new NotFoundError(`this challenge`);
+		throw new NotFoundError();
 	}
 
 	async getAllChallenge() {
@@ -46,6 +46,6 @@ export class ChallengeService {
 		const challenge = await this.challengeRepository.getOneChallenge(challengeId);
 
 		if (challenge) return this.joinRepository.getChallengeMember(challengeId);
-		throw new NotFoundError(`this challenge`);
+		throw new NotFoundError();
 	}
 }

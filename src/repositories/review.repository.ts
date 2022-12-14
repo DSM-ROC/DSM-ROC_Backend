@@ -41,27 +41,20 @@ export class ReviewRepository extends Repository<Review> {
 		return review;
 	}
 
-	async getOneReview(reviewId: number) {
-		const review = await this.findOne({
-			id: reviewId,
-		});
+  async checkReview(reviewId: number, user: User) {
+    return await this.findOne({ id: reviewId, userId: user.id });
+  }
 
-		return review;
-	}
+  async getOneReview(reviewId: number) {
+    return await this.findOne({ id: reviewId });
+  }
 
-	async getMyReview(user: User) {
-		const review = await this.findOne({
-			userId: user.id,
-		});
+  async getAllReview(challengeId: number) {
+    return await this.findOne({ challengeId });
+  }
 
-		return review;
-	}
-
-	async getAllReview(challengeId: number) {
-		const review = await this.findOne({
-			challengeId,
-		});
-
-		return review;
-	}
+  async getMyReview(user: User) {
+    return await this.findOne({ userId: user.id });
+  }
+  
 }
