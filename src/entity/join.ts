@@ -4,17 +4,17 @@ import { User } from './user';
 
 @Entity({ name: 'join' })
 export class Join {
-  @PrimaryColumn()
-  challengeId: number;
+	@PrimaryColumn()
+	challengeId: number;
 
-  @PrimaryColumn()
-  userId: number;
+	@PrimaryColumn()
+	userId: number;
 
-  @ManyToOne(() => User, (user) => user.join)
-  @JoinColumn({ name: 'userId' })
-  user: User;
+	@ManyToOne(() => User, user => user.join)
+	@JoinColumn({ name: 'userId' })
+	user: User;
 
-  @ManyToOne(() => Challenge, (challenge) => challenge.join)
-  @JoinColumn({ name: 'challengeId' })
-  challenge: Challenge;
+	@ManyToOne(() => Challenge, challenge => challenge.join)
+	@JoinColumn({ name: 'challengeId' })
+	challenge: Challenge;
 }

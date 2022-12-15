@@ -1,41 +1,40 @@
-import { EntityRepository, getCustomRepository, Like, Repository } from "typeorm";
-import { Challenge } from "../entity/challenge";
-import { Join } from "../entity/join";
-import { User } from "../entity/user";
-import { ChallengeInfo } from "../shared/DataTransferObject";
+import { EntityRepository, getCustomRepository, Like, Repository } from 'typeorm';
+import { Challenge } from '../entity/challenge';
+import { User } from '../entity/user';
+import { ChallengeInfo } from '../shared/DataTransferObject';
 
 @EntityRepository(Challenge)
 export class ChallengeRepository extends Repository<Challenge> {
-    static getQueryRepository() {
-        return getCustomRepository(ChallengeRepository);
-    }
+	static getQueryRepository() {
+		return getCustomRepository(ChallengeRepository);
+	}
 
-    async createChallenge(challengeInfo: ChallengeInfo, user: User) {
-      const newChallenge = this.create();
-      
-      newChallenge.name = challengeInfo.name;
-      newChallenge.introduction = challengeInfo.introduction;
-      newChallenge.limitMember = challengeInfo.limitMember;
-      newChallenge.leader = user.id;
+	async createChallenge(challengeInfo: ChallengeInfo, user: User) {
+		const newChallenge = this.create();
 
-      return await this.save(newChallenge);
-    }
+		newChallenge.name = challengeInfo.name;
+		newChallenge.introduction = challengeInfo.introduction;
+		newChallenge.limitMember = challengeInfo.limitMember;
+		newChallenge.leader = user.id;
 
-    async findByName(name: string): Promise<Challenge> {
-      return await this.findOne({ name });
-    }
+		return this.save(newChallenge);
+	}
 
-    async getOneChallenge(id: number): Promise<Challenge> {
-      return await this.findOne({ id });
-    }
+	async findByName(name: string): Promise<Challenge> {
+		return this.findOne({ name });
+	}
 
-    async getAllChallenge(): Promise<Challenge[]> {
-      return await this.find();
-    }
+	async getOneChallenge(id: number): Promise<Challenge> {
+		return this.findOne({ id });
+	}
 
-    async searchChallenge(searchWord: string) {
-      return this.find({
-        where: { name: Like(`%${searchWord}%`) },
-      });
-    }
+	async getAllChallenge(): Promise<Challenge[]> {
+		return this.find();
+	}
+
+	async searchChallenge(searchWord: string) {
+		return this.find({
+			where: { name: Like(`%${searchWord}%`) },
+		});
+	}
 }
