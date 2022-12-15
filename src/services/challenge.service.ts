@@ -1,6 +1,6 @@
 import { ChallengeRepository } from '../repositories/challenge.repository';
 import { User } from '../entity/user';
-import { ConflictError, NotFoundError } from '../shared/exception';
+import { ConflictError, ForbiddenError, NotFoundError } from '../shared/exception';
 import { ChallengeInfo } from '../shared/DataTransferObject';
 import { JoinRepository } from '../repositories/join.repository';
 
@@ -42,10 +42,14 @@ export class ChallengeService {
 		return this.challengeRepository.getAllChallenge();
 	}
 
-	async getChallengeMember(challengeId: number) {
+	async getChallengeMember(challengeId: number, user: User) {
 		const challenge = await this.challengeRepository.getOneChallenge(challengeId);
+		const check = await this.joinRepository.checkChallenge(challengeId, user);
 
-		if (challenge) return this.joinRepository.getChallengeMember(challengeId);
+		if (challenge) {
+			if (check) return this.joinRepository.getChallengeMember(challengeId);
+			throw new ForbiddenError();
+		}
 		throw new NotFoundError();
 	}
 
