@@ -30,4 +30,13 @@ export class JoinRepository extends Repository<Join> {
 			.where('join.challengeId = :challenge_id', { challenge_id: challengeId })
 			.getMany();
 	}
+
+	async getMyChallenge(user: User) {
+		return this.createQueryBuilder('join')
+			.select('join.challengeId')
+			.addSelect('challenge.name')
+			.innerJoin('join.challenge', 'challenge')
+			.where('join.userId = :user_id', { user_id: user.id })
+			.getMany();
+	}
 }

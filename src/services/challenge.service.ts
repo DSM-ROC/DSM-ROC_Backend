@@ -48,4 +48,8 @@ export class ChallengeService {
 		if (challenge) return this.joinRepository.getChallengeMember(challengeId);
 		throw new NotFoundError();
 	}
+
+	async getMyChallenge(user: User) {
+		return this.joinRepository.getMyChallenge(user);
+	}
 }
