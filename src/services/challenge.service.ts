@@ -1,6 +1,6 @@
 import { ChallengeRepository } from '../repositories/challenge.repository';
 import { User } from '../entity/user';
-import { ConflictError, ForbiddenError, NotFoundError } from '../shared/exception';
+import { BadRequestError, ConflictError, ForbiddenError, NotFoundError } from '../shared/exception';
 import { ChallengeInfo } from '../shared/DataTransferObject';
 import { JoinRepository } from '../repositories/join.repository';
 
@@ -12,7 +12,14 @@ export class ChallengeService {
 
 	async createChallenge(challengeInfo: ChallengeInfo, user: User) {
 		const alreadyChallenge = await this.challengeRepository.findByName(challengeInfo.name);
+    
 		if (alreadyChallenge) {
+      if(challengeInfo.limitMember < 5 || challengeInfo.limitMember > 30) 
+        throw new BadRequestError(`Error limitMember`);
+      
+      if(challengeInfo.period < 7 || challengeInfo.period > 30)
+        throw new BadRequestError(`Error Period`);
+  
 			throw new ConflictError();
 		}
 		return this.challengeRepository.createChallenge(challengeInfo, user);
