@@ -15,6 +15,8 @@ export class ChallengeRepository extends Repository<Challenge> {
 		newChallenge.name = challengeInfo.name;
 		newChallenge.introduction = challengeInfo.introduction;
 		newChallenge.limitMember = challengeInfo.limitMember;
+		newChallenge.period = challengeInfo.period;
+		newChallenge.topic = challengeInfo.topic;
 		newChallenge.leader = user.id;
 
 		return this.save(newChallenge);
