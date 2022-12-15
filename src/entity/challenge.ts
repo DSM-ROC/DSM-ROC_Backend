@@ -27,6 +27,9 @@ export class Challenge {
 	@Column({ nullable: false })
 	limitMember: number;
 
+	@Column({ nullable: false })
+	period: number;
+
 	@Column({ type: 'enum', enum: Topic, default: Topic.etc, nullable: false })
 	topic: Topic;
 
