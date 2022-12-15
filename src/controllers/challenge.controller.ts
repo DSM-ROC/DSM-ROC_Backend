@@ -56,7 +56,7 @@ export class ChallengeController {
 	public getChallengeMember: BusinessLogic = async (req, res, next) => {
 		const challengeId = Number(req.params.challenge_id);
 		const user = req.decoded;
-		console.log(user);
+
 		const response = await this.challengeService.getChallengeMember(challengeId, user);
 
 		return res.status(200).json(response);
