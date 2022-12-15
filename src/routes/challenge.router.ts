@@ -20,8 +20,8 @@ export const challengeServiceRouter = (app: Router) => {
 	);
 	router.get('/:challenge_id', errorHandler(challengeController.getOneChallenge));
 	router.get(
-		'/:challenge_id/member', 
+		'/:challenge_id/member',
 		verifyTokenMiddleware,
-		errorHandler(challengeController.getChallengeMember)
+		errorHandler(challengeController.getChallengeMember),
 	);
 };
