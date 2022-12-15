@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { Topic } from '../entity/enum/topic.enum';
 
 export class UserLoginInfo {
 	email: string;
@@ -43,6 +44,8 @@ export class ChallengeInfo {
 	introduction: string;
 	limitMember: number;
 	password: number;
+	period: number;
+	topic: Topic;
 }
 
 export const ProvideUserTokenSchema: Joi.ObjectSchema<ProvideUserTokenDto> = Joi.object().keys({
