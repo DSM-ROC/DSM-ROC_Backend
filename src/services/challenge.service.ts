@@ -12,19 +12,15 @@ export class ChallengeService {
 
 	async createChallenge(challengeInfo: ChallengeInfo, user: User) {
 		const alreadyChallenge = await this.challengeRepository.findByName(challengeInfo.name);
-    const period = await this.getDateDiff(challengeInfo.startDay, challengeInfo.endDay);
 
 		if (!alreadyChallenge) {
-			if (challengeInfo.limitMember < 5 || challengeInfo.limitMember > 30)
-				throw new BadRequestError(`Error limitMember`);
+			await this.limitMemberCheck(challengeInfo.limitMember);
+			await this.getDateDiff(challengeInfo.startDay, challengeInfo.endDay);
 
-      if(period > 30 || period < 7)
-        throw new BadRequestError(`Error Date`);
-  
-      const newChallenge = await this.challengeRepository.createChallenge(challengeInfo, user);
-      return this.joinRepository.JoinChallenge(newChallenge.id, user);
+			const newChallenge = await this.challengeRepository.createChallenge(challengeInfo, user);
+			return this.joinRepository.JoinChallenge(newChallenge.id, user);
 		}
-    throw new ConflictError();
+		throw new ConflictError();
 	}
 
 	async searchChallenge(searchWord: string) {
@@ -66,12 +62,18 @@ export class ChallengeService {
 		return this.joinRepository.getMyChallenge(user);
 	}
 
-  async getDateDiff(startDay: Date, endDay: Date) {
-    const StartDay = new Date(startDay);
-    const EndDay = new Date(endDay);
-  
-    const diffDate = StartDay.getTime() - EndDay.getTime();
-    
-    return Math.abs(diffDate / (1000 * 60 * 60 * 24));
-  }
+	async getDateDiff(startDay: Date, endDay: Date) {
+		const StartDay = new Date(startDay);
+		const EndDay = new Date(endDay);
+
+		const diffDate = StartDay.getTime() - EndDay.getTime();
+
+		const period = Math.abs(diffDate / (1000 * 60 * 60 * 24));
+
+		if (period > 30 || period < 7) throw new BadRequestError(`Error Date`);
+	}
+
+	async limitMemberCheck(limitMember: number) {
+		if (limitMember < 5 || limitMember > 30) throw new BadRequestError(`Error limitMember`);
+	}
 }
