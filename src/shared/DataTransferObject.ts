@@ -44,7 +44,8 @@ export class ChallengeInfo {
 	introduction: string;
 	limitMember: number;
 	password: number;
-	period: number;
+	startDay: Date;
+	endDay: Date;
 	topic: Topic;
 }
 
