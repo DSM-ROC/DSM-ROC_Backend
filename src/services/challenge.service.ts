@@ -13,14 +13,12 @@ export class ChallengeService {
 	async createChallenge(challengeInfo: ChallengeInfo, user: User) {
 		const alreadyChallenge = await this.challengeRepository.findByName(challengeInfo.name);
 
-		if (!alreadyChallenge) {
-			await this.limitMemberCheck(challengeInfo.limitMember);
-			await this.getDateDiff(challengeInfo.startDay, challengeInfo.endDay);
+		if (alreadyChallenge) throw new ConflictError();
 
-			const newChallenge = await this.challengeRepository.createChallenge(challengeInfo, user);
-			return this.joinRepository.joinChallenge(newChallenge.id, user);
-		}
-		throw new ConflictError();
+		await this.getDateDiff(challengeInfo.startDay, challengeInfo.endDay);
+		await this.limitMemberCheck(challengeInfo.limitMember);
+
+		return this.challengeRepository.createChallenge(challengeInfo, user);
 	}
 
 	async searchChallenge(searchWord: string) {
@@ -29,8 +27,9 @@ export class ChallengeService {
 
 	async joinChallenge(challengeId: number, user: User) {
 		await this.checkDate(challengeId);
+
 		if (await this.challengeRepository.getOneChallenge(challengeId)) {
-			if (!(await this.joinRepository.checkChallenge(challengeId, user))) {
+			if (!(await this.joinRepository.checkJoinChallenge(challengeId, user))) {
 				this.joinRepository.joinChallenge(challengeId, user);
 			} else throw new ConflictError();
 		} else throw new NotFoundError();
@@ -40,7 +39,7 @@ export class ChallengeService {
 		const challenge = await this.challengeRepository.getOneChallenge(challengeId);
 
 		if (challenge) {
-			if (await this.joinRepository.checkChallenge(challengeId, user))
+			if (await this.joinRepository.checkJoinChallenge(challengeId, user))
 				this.joinRepository.exitChallenge(challengeId, user);
 			else throw new ForbiddenError();
 		} else throw new NotFoundError();
@@ -48,7 +47,7 @@ export class ChallengeService {
 
 	async getOneChallenge(challengeId: number) {
 		const challenge = await this.challengeRepository.getOneChallenge(challengeId);
-
+		console.log(challenge);
 		if (challenge) return challenge;
 		throw new NotFoundError();
 	}
@@ -58,7 +57,7 @@ export class ChallengeService {
 	}
 
 	async getChallengeMember(challengeId: number, user: User) {
-		await this.checkApi(challengeId, user);
+		await this.checkChallenge(challengeId, user);
 		return this.joinRepository.getChallengeMember(challengeId);
 	}
 
@@ -81,9 +80,10 @@ export class ChallengeService {
 		if (limitMember < 5 || limitMember > 30) throw new BadRequestError(`Error limitMember`);
 	}
 
-	async checkApi(challengeId: number, user: User) {
+	async checkChallenge(challengeId: number, user: User) {
 		if (!(await this.challengeRepository.getOneChallenge(challengeId))) throw new NotFoundError();
-		if (!(await this.joinRepository.checkChallenge(challengeId, user))) throw new ForbiddenError();
+		if (!(await this.joinRepository.checkJoinChallenge(challengeId, user)))
+			throw new ForbiddenError();
 	}
 
 	async checkDate(challengeId: number) {
@@ -92,7 +92,6 @@ export class ChallengeService {
 		const { endDay } = await this.challengeRepository.getOneChallenge(challengeId);
 
 		const diffEndDate = endDay.getTime() - Today.getTime();
-		console.log(diffEndDate);
 
 		if (diffEndDate < 0) throw new BadRequestError('종료된 챌린지');
 	}
