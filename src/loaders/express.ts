@@ -25,7 +25,13 @@ export const loadExpress = (app: Application) => {
 		express.urlencoded({ extended: false })(req, res as ServerResponse, next);
 	});
 
-	app.use(cors());
+	const CorsOption = {
+		origin: '*',
+		method: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD'],
+		credentials: true,
+	};
+
+	app.use(cors(CorsOption));
 
 	app.use('/', dsmlocRouter());
 

@@ -1,3 +1,4 @@
+import { ChallengeRepository } from '../repositories/challenge.repository';
 import { JoinRepository } from '../repositories/join.repository';
 import { ReviewRepository } from '../repositories/review.repository';
 import { ReviewService } from '../services/review.service';
@@ -7,6 +8,7 @@ export class ReviewController {
 	private reviewService: ReviewService = new ReviewService(
 		ReviewRepository.getQueryRepository(),
 		JoinRepository.getQueryRepository(),
+		ChallengeRepository.getQueryRepository(),
 	);
 
 	public createReview: BusinessLogic = async (req, res, next) => {
