@@ -27,6 +27,12 @@ export class Challenge {
 	@Column({ nullable: false })
 	limitMember: number;
 
+	@Column({ nullable: true })
+	startDay: Date;
+
+	@Column({ nullable: true })
+	endDay: Date;
+
 	@Column({ type: 'enum', enum: Topic, default: Topic.etc, nullable: false })
 	topic: Topic;
 

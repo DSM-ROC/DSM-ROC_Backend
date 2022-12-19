@@ -8,7 +8,7 @@ export class JoinRepository extends Repository<Join> {
 		return getCustomRepository(JoinRepository);
 	}
 
-	async JoinChallenge(challengeId: number, user: User) {
+	async joinChallenge(challengeId: number, user: User) {
 		const join = new Join();
 
 		join.challengeId = challengeId;
@@ -17,9 +17,12 @@ export class JoinRepository extends Repository<Join> {
 		return this.save(join);
 	}
 
+	async exitChallenge(challengeId: number, user: User) {
+		return this.delete({ challengeId, userId: user.id });
+	}
+
 	async checkChallenge(challengeId: number, user: User) {
-		const challenge = await this.findOne({ challengeId, userId: user.id });
-		return challenge;
+		return this.findOne({ challengeId, userId: user.id });
 	}
 
 	async getChallengeMember(challengeId: number) {
@@ -28,6 +31,15 @@ export class JoinRepository extends Repository<Join> {
 			.addSelect('user.nickname')
 			.innerJoin('join.user', 'user')
 			.where('join.challengeId = :challenge_id', { challenge_id: challengeId })
+			.getMany();
+	}
+
+	async getMyChallenge(user: User) {
+		return this.createQueryBuilder('join')
+			.select('join.challengeId')
+			.addSelect('challenge.name')
+			.innerJoin('join.challenge', 'challenge')
+			.where('join.userId = :user_id', { user_id: user.id })
 			.getMany();
 	}
 }

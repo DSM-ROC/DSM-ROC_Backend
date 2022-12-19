@@ -12,11 +12,21 @@ export const challengeServiceRouter = (app: Router) => {
 	router.post('/', verifyTokenMiddleware, errorHandler(challengeController.createChallenge));
 	router.get('/', errorHandler(challengeController.getAllChallenge));
 	router.get('/search', errorHandler(challengeController.searchChallenge));
+	router.get('/me', verifyTokenMiddleware, errorHandler(challengeController.getMyChallenge));
 	router.post(
 		'/:challenge_id',
 		verifyTokenMiddleware,
 		errorHandler(challengeController.joinChallenge),
 	);
+	router.delete(
+		'/:challenge_id',
+		verifyTokenMiddleware,
+		errorHandler(challengeController.exitChallenge),
+	);
 	router.get('/:challenge_id', errorHandler(challengeController.getOneChallenge));
-	router.get('/:challenge_id/member', errorHandler(challengeController.getChallengeMember));
+	router.get(
+		'/:challenge_id/member',
+		verifyTokenMiddleware,
+		errorHandler(challengeController.getChallengeMember),
+	);
 };

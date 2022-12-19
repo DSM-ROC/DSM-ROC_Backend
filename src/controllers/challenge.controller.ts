@@ -1,3 +1,4 @@
+import { response } from 'express';
 import { ChallengeRepository } from '../repositories/challenge.repository';
 import { ChallengeService } from '../services/challenge.service';
 import { BusinessLogic } from '../shared/BusinessLogicInterface';
@@ -38,6 +39,17 @@ export class ChallengeController {
 		});
 	};
 
+	public exitChallenge: BusinessLogic = async (req, res, next) => {
+		const challengeId = Number(req.params.challenge_id);
+		const user = req.decoded;
+
+		await this.challengeService.exitChallenge(challengeId, user);
+
+		return res.status(200).json({
+			message: 'exitChallenge success',
+		});
+	};
+
 	public getOneChallenge: BusinessLogic = async (req, res, next) => {
 		const challengeId = Number(req.params.challenge_id);
 
@@ -54,8 +66,17 @@ export class ChallengeController {
 
 	public getChallengeMember: BusinessLogic = async (req, res, next) => {
 		const challengeId = Number(req.params.challenge_id);
+		const user = req.decoded;
 
-		const response = await this.challengeService.getChallengeMember(challengeId);
+		const response = await this.challengeService.getChallengeMember(challengeId, user);
+
+		return res.status(200).json(response);
+	};
+
+	public getMyChallenge: BusinessLogic = async (req, res, next) => {
+		const user = req.decoded;
+
+		const response = await this.challengeService.getMyChallenge(user);
 
 		return res.status(200).json(response);
 	};
