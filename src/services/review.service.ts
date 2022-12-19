@@ -67,6 +67,6 @@ export class ReviewService {
 		const review = await this.reviewRepository.getOneReview(reviewId);
 
 		if (!review) throw new NotFoundError();
-		else if (review.userId != user.id) throw new ForbiddenError();
+		else if (review.userId !== user.id) throw new ForbiddenError();
 	}
 }
