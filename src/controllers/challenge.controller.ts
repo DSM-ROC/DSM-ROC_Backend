@@ -39,6 +39,17 @@ export class ChallengeController {
 		});
 	};
 
+	public exitChallenge: BusinessLogic = async (req, res, next) => {
+		const challengeId = Number(req.params.challenge_id);
+		const user = req.decoded;
+
+		await this.challengeService.exitChallenge(challengeId, user);
+
+		return res.status(200).json({
+			message: 'exitChallenge success',
+		});
+	};
+
 	public getOneChallenge: BusinessLogic = async (req, res, next) => {
 		const challengeId = Number(req.params.challenge_id);
 
