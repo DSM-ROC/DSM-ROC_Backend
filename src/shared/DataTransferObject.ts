@@ -1,5 +1,7 @@
 import Joi from 'joi';
+import { Challenge } from '../entity/challenge';
 import { Topic } from '../entity/enum/topic.enum';
+import { Post } from '../entity/post';
 
 export class UserLoginInfo {
 	email: string;
@@ -39,13 +41,19 @@ export class ProvideUserTokenDto {
 	code: string;
 }
 
-export class ChallengeInfo {
+export class ChallengeInfo extends Challenge {
 	name: string;
 	introduction: string;
 	limitMember: number;
 	password: number;
-	period: number;
+	startDay: Date;
+	endDay: Date;
 	topic: Topic;
+}
+
+export class PostInfo extends Post {
+	title: string;
+	text: string;
 }
 
 export const ProvideUserTokenSchema: Joi.ObjectSchema<ProvideUserTokenDto> = Joi.object().keys({
