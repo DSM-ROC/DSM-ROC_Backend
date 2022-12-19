@@ -27,7 +27,7 @@ export const loadExpress = (app: Application) => {
 
 	const CorsOption = {
 		origin: '*',
-		method: ['GET', 'POST', 'PATCH', 'DELETE'],
+		method: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD'],
 		credentials: true,
 	};
 
