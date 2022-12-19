@@ -45,12 +45,35 @@ export class ReviewRepository extends Repository<Review> {
 		return this.findOne({ id: reviewId, userId: user.id });
 	}
 
-	async getOneReview(reviewId: number) {
-		return this.findOne({ id: reviewId });
+	async getOneReview(challengeId: number, reviewId: number) {
+		return this.createQueryBuilder('review')
+			.select('review.id')
+			.addSelect('challenge.name')
+			.addSelect('review.text')
+			.addSelect('user.nickname')
+			.addSelect('review.createdAt')
+			.addSelect('review.updatedAt')
+			.innerJoin('review.user', 'user')
+			.innerJoin('review.challenge', 'challenge')
+			.where('review.id = :reviewId AND review.challengeId = :challengeId', {
+				reviewId,
+				challengeId,
+			})
+			.getOne();
 	}
 
 	async getAllReview(challengeId: number) {
-		return this.find({ challengeId });
+		return this.createQueryBuilder('review')
+			.select('review.id')
+			.addSelect('challenge.name')
+			.addSelect('review.text')
+			.addSelect('user.nickname')
+			.addSelect('review.createdAt')
+			.addSelect('review.updatedAt')
+			.innerJoin('review.user', 'user')
+			.innerJoin('review.challenge', 'challenge')
+			.where('review.challengeId = :challengeId', { challengeId })
+			.getMany();
 	}
 
 	async getMyReview(user: User) {

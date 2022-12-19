@@ -20,14 +20,14 @@ export class ReviewService {
 
 	async updateReview(challengeId: number, reviewId: number, review: string, user: User) {
 		await this.checkChallenge(challengeId, user);
-		await this.checkReview(reviewId, user);
+		await this.checkReview(challengeId, reviewId, user);
 
 		return this.reviewRepository.updateReview(reviewId, review, user);
 	}
 
 	async deleteReview(challengeId: number, reviewId: number, user: User) {
 		await this.checkChallenge(challengeId, user);
-		await this.checkReview(reviewId, user);
+		await this.checkReview(challengeId, reviewId, user);
 
 		return this.reviewRepository.deleteReview(reviewId, user);
 	}
@@ -41,9 +41,10 @@ export class ReviewService {
 	async getOneReview(challengeId: number, reviewId: number, user: User) {
 		await this.checkChallenge(challengeId, user);
 
-		if (!(await this.reviewRepository.getOneReview(reviewId))) throw new NotFoundError();
+		if (!(await this.reviewRepository.getOneReview(challengeId, reviewId)))
+			throw new NotFoundError();
 
-		return this.reviewRepository.getOneReview(reviewId);
+		return this.reviewRepository.getOneReview(challengeId, reviewId);
 	}
 
 	async checkDate(challengeId: number) {
@@ -52,7 +53,6 @@ export class ReviewService {
 
 		const diffStartDate = startDay.getTime() - Today.getTime();
 		const diffEndDate = endDay.getTime() - Today.getTime();
-		console.log(diffStartDate, diffEndDate);
 
 		if (diffStartDate > 0 || diffEndDate < 0) throw new BadRequestError('진행 중인 챌린지가 아님');
 	}
@@ -63,8 +63,8 @@ export class ReviewService {
 			throw new ForbiddenError();
 	}
 
-	async checkReview(reviewId: number, user: User) {
-		const review = await this.reviewRepository.getOneReview(reviewId);
+	async checkReview(challengeId: number, reviewId: number, user: User) {
+		const review = await this.reviewRepository.getOneReview(challengeId, reviewId);
 
 		if (!review) throw new NotFoundError();
 		else if (review.userId !== user.id) throw new ForbiddenError();
