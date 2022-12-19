@@ -12,17 +12,8 @@ export class ReviewService {
 	) {}
 
 	async createReview(challengeId: number, review: string, user: User) {
-		const challenge = await this.challengeRepository.getOneChallenge(challengeId);
-		const check = await this.joinRepository.checkChallenge(challengeId, user);
-
-		if (challenge) {
-			if (check) {
-				await this.checkDate(challengeId);
-				return this.reviewRepository.createReview(challengeId, review, user);
-			}
-			throw new ForbiddenError();
-		}
-		throw new NotFoundError();
+		await this.checkApi(challengeId, user);
+		return this.reviewRepository.createReview(challengeId, review, user);
 	}
 
 	async updateReview(challengeId: number, reviewId: number, review: string, user: User) {
@@ -79,5 +70,10 @@ export class ReviewService {
 		const diffEndDate = endDay.getTime() - Today.getTime();
 
 		if (diffStartDate > 0 || diffEndDate < 0) throw new BadRequestError('진행 중인 챌린지가 아님');
+	}
+
+	async checkApi(challengeId: number, user: User) {
+		if (!(await this.challengeRepository.getOneChallenge(challengeId))) throw new NotFoundError();
+		if (!(await this.joinRepository.checkChallenge(challengeId, user))) throw new ForbiddenError();
 	}
 }
