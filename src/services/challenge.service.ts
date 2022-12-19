@@ -70,7 +70,7 @@ export class ChallengeService {
 
 		const period = Math.abs(diffDate / (1000 * 60 * 60 * 24));
 
-		if (7 > period || period > 30 || diffDate > 0) throw new BadRequestError(`Error Date`);
+		if (period < 7 || period > 30 || diffDate > 0) throw new BadRequestError(`Error Date`);
 	}
 
 	async limitMemberCheck(limitMember: number) {
