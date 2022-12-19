@@ -12,68 +12,61 @@ export class ReviewService {
 	) {}
 
 	async createReview(challengeId: number, review: string, user: User) {
-		await this.checkApi(challengeId, user);
+		await this.checkChallenge(challengeId, user);
+		await this.checkDate(challengeId);
+
 		return this.reviewRepository.createReview(challengeId, review, user);
 	}
 
 	async updateReview(challengeId: number, reviewId: number, review: string, user: User) {
-		const check = await this.joinRepository.checkChallenge(challengeId, user);
+		await this.checkChallenge(challengeId, user);
+		await this.checkReview(reviewId, user);
 
-		if (check) {
-			if (!(await this.reviewRepository.checkReview(reviewId, user))) throw new ForbiddenError();
-			if (!(await this.reviewRepository.getOneReview(challengeId, reviewId)))
-				throw new NotFoundError();
-
-			return this.reviewRepository.updateReview(reviewId, review, user);
-		}
-		throw new ForbiddenError();
+		return this.reviewRepository.updateReview(reviewId, review, user);
 	}
 
 	async deleteReview(challengeId: number, reviewId: number, user: User) {
-		const check = await this.joinRepository.checkChallenge(challengeId, user);
+		await this.checkChallenge(challengeId, user);
+		await this.checkReview(reviewId, user);
 
-		if (check) {
-			if (!(await this.reviewRepository.checkReview(reviewId, user))) throw new ForbiddenError();
-			if (!(await this.reviewRepository.getOneReview(challengeId, reviewId)))
-				throw new NotFoundError();
-
-			return this.reviewRepository.deleteReview(reviewId, user);
-		}
-		throw new ForbiddenError();
+		return this.reviewRepository.deleteReview(reviewId, user);
 	}
 
 	async getAllReview(challengeId: number, user: User) {
-		const check = await this.joinRepository.checkChallenge(challengeId, user);
+		await this.checkChallenge(challengeId, user);
 
-		if (check) return this.reviewRepository.getAllReview(challengeId);
-		throw new ForbiddenError();
+		return this.reviewRepository.getAllReview(challengeId);
 	}
 
 	async getOneReview(challengeId: number, reviewId: number, user: User) {
-		const check = await this.joinRepository.checkChallenge(challengeId, user);
+		await this.checkChallenge(challengeId, user);
 
-		if (check) {
-			if (!(await this.reviewRepository.getOneReview(challengeId, reviewId)))
-				throw new NotFoundError();
+		if (!(await this.reviewRepository.getOneReview(reviewId))) throw new NotFoundError();
 
-			return this.reviewRepository.getOneReview(challengeId, reviewId);
-		}
-		throw new ForbiddenError();
+		return this.reviewRepository.getOneReview(reviewId);
 	}
 
 	async checkDate(challengeId: number) {
 		const Today = new Date();
-		const { startDay } = await this.challengeRepository.getOneChallenge(challengeId);
-		const { endDay } = await this.challengeRepository.getOneChallenge(challengeId);
+		const { startDay, endDay } = await this.challengeRepository.getOneChallenge(challengeId);
 
 		const diffStartDate = startDay.getTime() - Today.getTime();
 		const diffEndDate = endDay.getTime() - Today.getTime();
+		console.log(diffStartDate, diffEndDate);
 
 		if (diffStartDate > 0 || diffEndDate < 0) throw new BadRequestError('진행 중인 챌린지가 아님');
 	}
 
-	async checkApi(challengeId: number, user: User) {
+	async checkChallenge(challengeId: number, user: User) {
 		if (!(await this.challengeRepository.getOneChallenge(challengeId))) throw new NotFoundError();
-		if (!(await this.joinRepository.checkChallenge(challengeId, user))) throw new ForbiddenError();
+		if (!(await this.joinRepository.checkJoinChallenge(challengeId, user)))
+			throw new ForbiddenError();
+	}
+
+	async checkReview(reviewId: number, user: User) {
+		const review = await this.reviewRepository.getOneReview(reviewId);
+
+		if (!review) throw new NotFoundError();
+		else if (review.userId !== user.id) throw new ForbiddenError();
 	}
 }

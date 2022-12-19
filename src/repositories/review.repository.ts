@@ -45,8 +45,8 @@ export class ReviewRepository extends Repository<Review> {
 		return this.findOne({ id: reviewId, userId: user.id });
 	}
 
-	async getOneReview(challengeId: number, reviewId: number) {
-		return this.findOne({ id: reviewId, challengeId });
+	async getOneReview(reviewId: number) {
+		return this.findOne({ id: reviewId });
 	}
 
 	async getAllReview(challengeId: number) {
