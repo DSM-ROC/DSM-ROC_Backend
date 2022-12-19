@@ -21,7 +21,7 @@ export class JoinRepository extends Repository<Join> {
 		return this.delete({ challengeId, userId: user.id });
 	}
 
-	async checkChallenge(challengeId: number, user: User) {
+	async checkJoinChallenge(challengeId: number, user: User) {
 		return this.findOne({ challengeId, userId: user.id });
 	}
 
