@@ -64,7 +64,7 @@ export class ReviewService {
 	}
 
 	async checkReview(challengeId: number, reviewId: number, user: User) {
-		const review = await this.reviewRepository.getOneReview(challengeId, reviewId);
+		const review = await this.reviewRepository.checkReview(challengeId, reviewId);
 
 		if (!review) throw new NotFoundError();
 		else if (review.userId !== user.id) throw new ForbiddenError();
