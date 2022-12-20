@@ -21,7 +21,7 @@ export class PostRepository extends Repository<Post> {
 	}
 
 	async updatePost(postId: number, postInfo: PostInfo, user: User) {
-		return await this.update(
+		return this.update(
 			{
 				id: postId,
 				writer: user.id,
@@ -34,7 +34,7 @@ export class PostRepository extends Repository<Post> {
 	}
 
 	async deletePost(postId: number, user: User) {
-		return await this.delete({
+		return this.delete({
 			id: postId,
 			writer: user.id,
 		});
