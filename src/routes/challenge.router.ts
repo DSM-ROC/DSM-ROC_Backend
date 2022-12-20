@@ -18,6 +18,11 @@ export const challengeServiceRouter = (app: Router) => {
 		verifyTokenMiddleware,
 		errorHandler(challengeController.joinChallenge),
 	);
+	router.delete(
+		'/:challenge_id',
+		verifyTokenMiddleware,
+		errorHandler(challengeController.exitChallenge),
+	);
 	router.get('/:challenge_id', errorHandler(challengeController.getOneChallenge));
 	router.get(
 		'/:challenge_id/member',
