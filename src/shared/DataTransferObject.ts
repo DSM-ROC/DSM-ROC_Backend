@@ -45,7 +45,6 @@ export class ChallengeInfo extends Challenge {
 	name: string;
 	introduction: string;
 	limitMember: number;
-	password: number;
 	startDay: Date;
 	endDay: Date;
 	topic: Topic;
