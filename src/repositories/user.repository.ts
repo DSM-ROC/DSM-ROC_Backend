@@ -31,6 +31,8 @@ export class UserRepository extends Repository<User> {
 			.addSelect('user.email')
 			.addSelect('user.createdAt')
 			.addSelect('user.updatedAt')
+			.where('user.id = :id')
+			.setParameter('id', id)
 			.getOne();
 	}
 
