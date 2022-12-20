@@ -48,17 +48,17 @@ export class PostController {
 		const postId = Number(req.params.post_id);
 		const user = req.decoded;
 
-		const respoonse = await this.postService.getOnePost(challengeId, postId, user);
+		const response = await this.postService.getOnePost(challengeId, postId, user);
 
-		return res.status(200).json(respoonse);
+		return res.status(200).json(respoose);
 	};
 
 	public getAllPost: BusinessLogic = async (req, res, next) => {
 		const challengeId = Number(req.params.challenge_id);
 		const user = req.decoded;
 
-		const respoonse = await this.postService.getAllPost(challengeId, user);
+		const response = await this.postService.getAllPost(challengeId, user);
 
-		return res.status(200).json(respoonse);
+		return res.status(200).json(response);
 	};
 }
