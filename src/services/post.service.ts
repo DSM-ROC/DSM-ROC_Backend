@@ -19,6 +19,7 @@ export class PostService {
 
 	async checkApi(challengeId: number, user: User) {
 		if (!(await this.challengeRepository.getOneChallenge(challengeId))) throw new NotFoundError();
-		if (!(await this.joinRepository.checkChallenge(challengeId, user))) throw new ForbiddenError();
+		if (!(await this.joinRepository.checkJoinChallenge(challengeId, user)))
+			throw new ForbiddenError();
 	}
 }
