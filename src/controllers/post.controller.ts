@@ -30,7 +30,7 @@ export class PostController {
 
 		await this.postService.updatePost(challengeId, postId, postInfo, user);
 
-		return res.staus(200).json({ message: 'updatePost success' });
+		return res.status(200).json({ message: 'updatePost success' });
 	};
 
 	public deletePost: BusinessLogic = async (req, res, next) => {
@@ -40,7 +40,7 @@ export class PostController {
 
 		await this.postService.deletePost(challengeId, postId, user);
 
-		return res.staus(200).json({ message: 'deletePost success' });
+		return res.status(200).json({ message: 'deletePost success' });
 	};
 
 	public getOnePost: BusinessLogic = async (req, res, next) => {
@@ -50,7 +50,7 @@ export class PostController {
 
 		const respoonse = await this.postService.getOnePost(challengeId, postId, user);
 
-		return res.staus(200).json(respoonse);
+		return res.status(200).json(respoonse);
 	};
 
 	public getAllPost: BusinessLogic = async (req, res, next) => {
@@ -59,6 +59,6 @@ export class PostController {
 
 		const respoonse = await this.postService.getAllPost(challengeId, user);
 
-		return res.staus(200).json(respoonse);
+		return res.status(200).json(respoonse);
 	};
 }
