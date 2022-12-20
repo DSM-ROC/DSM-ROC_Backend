@@ -52,7 +52,7 @@ export class PostService {
 	}
 
 	async checkPost(challengeId: number, postId: number, user: User) {
-		const post = await this.postRepository.getOnePost(challengeId, postId);
+		const post = await this.postRepository.checkPost(challengeId, postId);
 
 		if (!post) throw new NotFoundError();
 		else if (post.writer !== user.id) throw new ForbiddenError();

@@ -72,4 +72,8 @@ export class PostRepository extends Repository<Post> {
 			.where('post.challengeId = challengeId', { challengeId })
 			.getMany();
 	}
+
+	async checkPost(challengeId: number, postId: number) {
+		return this.findOne({ id: postId, challengeId });
+	}
 }

@@ -26,10 +26,10 @@ export class Post {
 	@Column()
 	writer: number;
 
-	@Column({ nullable: false, length: 20 })
+	@Column({ charset: 'utf8mb4', collation: 'utf8mb4_general_ci', length: 25 })
 	title: string;
 
-	@Column({ nullable: false })
+	@Column({ charset: 'utf8mb4', collation: 'utf8mb4_general_ci' })
 	text: string;
 
 	@CreateDateColumn()
