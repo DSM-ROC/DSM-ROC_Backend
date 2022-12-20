@@ -42,4 +42,14 @@ export class PostController {
 
 		return res.staus(200).json({ message: 'deletePost success' });
 	};
+
+	public getOnePost: BusinessLogic = async (req, res, next) => {
+		const challengeId = Number(req.params.challenge_id);
+		const postId = Number(req.params.post_id);
+		const user = req.decoded;
+
+		const respoonse = await this.postService.getOnePost(challengeId, postId, user);
+
+		return res.staus(200).json(respoonse);
+	};
 }

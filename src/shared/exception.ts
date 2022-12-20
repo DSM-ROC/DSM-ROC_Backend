@@ -46,6 +46,12 @@ export class NotFoundError extends HttpError {
 	}
 }
 
+export class UserNotFoundError extends HttpError {
+	constructor() {
+		super(404, 'User Not Found');
+	}
+}
+
 export class BadRequestError extends HttpError {
 	constructor(message = 'Bad Request') {
 		super(400, message);
