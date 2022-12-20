@@ -18,7 +18,7 @@ export class ReviewController {
 
 		const response = await this.reviewService.createReview(challengeId, review, user);
 
-		return res.status(202).json(response);
+		return res.status(201).json(response);
 	};
 
 	public updateReview: BusinessLogic = async (req, res, next) => {
