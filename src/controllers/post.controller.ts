@@ -21,4 +21,15 @@ export class PostController {
 
 		return res.status(201).json(response);
 	};
+
+	public updatePost: BusinessLogic = async (req, res, next) => {
+		const postInfo = req.body as PostInfo;
+		const challengeId = Number(req.params.challenge_id);
+		const postId = Number(req.params.post_id);
+		const user = req.decoded;
+
+		await this.postService.updatePost(challengeId, postId, postInfo, user);
+
+		return res.staus(200).json({ message: 'updatePost success' });
+	};
 }

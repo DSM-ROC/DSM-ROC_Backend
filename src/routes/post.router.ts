@@ -14,4 +14,9 @@ export const postServiceRouter = (app: Router) => {
 		verifyTokenMiddleware,
 		errorHandler(postController.createPost),
 	);
+	router.patch(
+		'/:challenge_id/post/:post_id',
+		verifyTokenMiddleware,
+		errorHandler(postController.updatePost),
+	);
 };
