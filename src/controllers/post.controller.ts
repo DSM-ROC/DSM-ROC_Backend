@@ -32,4 +32,14 @@ export class PostController {
 
 		return res.staus(200).json({ message: 'updatePost success' });
 	};
+
+	public deletePost: BusinessLogic = async (req, res, next) => {
+		const challengeId = Number(req.params.challenge_id);
+		const postId = Number(req.params.post_id);
+		const user = req.decoded;
+
+		await this.postService.deletePost(challengeId, postId, user);
+
+		return res.staus(200).json({ message: 'deletePost success' });
+	};
 }

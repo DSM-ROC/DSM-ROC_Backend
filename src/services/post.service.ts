@@ -24,6 +24,27 @@ export class PostService {
 		return this.postRepository.updatePost(postId, postInfo, user);
 	}
 
+	async deletePost(challengeId: number, postId: number, user: User) {
+		await this.checkChallenge(challengeId, user);
+		await this.checkPost(challengeId, postId, user);
+
+		return this.postRepository.deletePost(postId, user);
+	}
+
+	async getAllPost(challengeId: number, user: User) {
+		await this.checkChallenge(challengeId, user);
+
+		return this.postRepository.getAllPost(challengeId);
+	}
+
+	async getOnePost(challengeId: number, postId: number, user: User) {
+		await this.checkChallenge(challengeId, user);
+
+		if (!(await this.postRepository.getOnePost(challengeId, postId))) throw new NotFoundError();
+
+		return this.postRepository.getOnePost(challengeId, postId);
+	}
+
 	async checkChallenge(challengeId: number, user: User) {
 		if (!(await this.challengeRepository.getOneChallenge(challengeId))) throw new NotFoundError();
 		if (!(await this.joinRepository.checkJoinChallenge(challengeId, user)))
