@@ -19,4 +19,9 @@ export const postServiceRouter = (app: Router) => {
 		verifyTokenMiddleware,
 		errorHandler(postController.updatePost),
 	);
+	router.delete(
+		'/:challenge_id/post/:post_id',
+		verifyTokenMiddleware,
+		errorHandler(postController.updatePost),
+	);
 };
