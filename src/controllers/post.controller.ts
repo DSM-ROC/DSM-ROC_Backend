@@ -52,4 +52,13 @@ export class PostController {
 
 		return res.staus(200).json(respoonse);
 	};
+
+	public getAllPost: BusinessLogic = async (req, res, next) => {
+		const challengeId = Number(req.params.challenge_id);
+		const user = req.decoded;
+
+		const respoonse = await this.postService.getAllPost(challengeId, user);
+
+		return res.staus(200).json(respoonse);
+	};
 }
