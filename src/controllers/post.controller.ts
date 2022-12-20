@@ -50,7 +50,7 @@ export class PostController {
 
 		const response = await this.postService.getOnePost(challengeId, postId, user);
 
-		return res.status(200).json(respoose);
+		return res.status(200).json(response);
 	};
 
 	public getAllPost: BusinessLogic = async (req, res, next) => {
