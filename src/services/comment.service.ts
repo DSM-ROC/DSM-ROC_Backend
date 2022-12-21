@@ -20,6 +20,27 @@ export class CommentService {
 		return this.commentRepository.createComment(postId, text, user);
 	}
 
+	async updateComment(
+		challengeId: number,
+		postId: number,
+		commentId: number,
+		text: string,
+		user: User,
+	) {
+		await this.checkChallenge(challengeId, user);
+		await this.checkPost(challengeId, postId);
+		await this.checkComment(postId, commentId, user);
+
+		return this.commentRepository.updateComment(commentId, text, user);
+	}
+
+	async getAllComment(challengeId: number, postId: number, user: User) {
+		await this.checkChallenge(challengeId, user);
+		await this.checkPost(challengeId, postId);
+
+		return this.commentRepository.getAllComment(postId);
+	}
+
 	async checkChallenge(challengeId: number, user: User) {
 		if (!(await this.challengeRepository.getOneChallenge(challengeId))) throw new NotFoundError();
 		if (!(await this.joinRepository.checkJoinChallenge(challengeId, user)))

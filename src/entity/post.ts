@@ -14,6 +14,7 @@ import {
 import { Challenge } from './challenge';
 import { User } from './user';
 import { Like } from './like';
+import { Comment } from './comment';
 
 @Entity({ name: 'post' })
 export class Post {
@@ -48,4 +49,7 @@ export class Post {
 
 	@OneToMany(() => Like, like => like.post)
 	like: Like[];
+
+	@OneToMany(() => Comment, comment => comment.post)
+	comment: Comment[];
 }

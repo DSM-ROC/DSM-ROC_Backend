@@ -19,9 +19,18 @@ export class CommentController {
 		const postId = Number(req.params.post_id);
 		const user = req.decoded;
 
-		console.log(challengeId, postId);
 		const response = await this.commentService.createComment(challengeId, postId, text, user);
 
 		return res.status(201).json(response);
+	};
+
+	public getAllCommnet: BusinessLogic = async (req, res, next) => {
+		const challengeId = Number(req.params.challenge_id);
+		const postId = Number(req.params.post_id);
+		const user = req.decoded;
+
+		const response = await this.commentService.getAllComment(challengeId, postId, user);
+
+		return res.status(200).json(response);
 	};
 }
