@@ -34,11 +34,12 @@ export class CommentService {
 		return this.commentRepository.updateComment(commentId, text, user);
 	}
 
-	async getAllComment(challengeId: number, postId: number, user: User) {
+	async deleteComment(challengeId: number, postId: number, commentId: number, user: User) {
 		await this.checkChallenge(challengeId, user);
 		await this.checkPost(challengeId, postId);
+		await this.checkComment(postId, commentId, user);
 
-		return this.commentRepository.getAllComment(postId);
+		return this.commentRepository.deleteComment(commentId, user);
 	}
 
 	async checkChallenge(challengeId: number, user: User) {

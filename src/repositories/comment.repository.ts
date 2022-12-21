@@ -30,17 +30,11 @@ export class CommentRepository extends Repository<Comment> {
 		);
 	}
 
-	async getAllComment(postId: number) {
-		return this.createQueryBuilder('comment')
-			.select('comment.id')
-			.addSelect('comment.text')
-			.addSelect('comment.createdAt')
-			.addSelect('comment.updatedAt')
-			.addSelect('user.nickname')
-			.innerJoin('comment.user', 'user')
-			.innerJoin('comment.post', 'post')
-			.where('comment.postId = :postId', { postId })
-			.getMany();
+	async deleteComment(commentId: number, user: User) {
+		return this.delete({
+			id: commentId,
+			writer: user.id,
+		});
 	}
 
 	async checkComment(postId: number, commentId: number) {
