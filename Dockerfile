@@ -6,8 +6,8 @@ COPY ./package.json ./
 
 RUN yarn
 
-RUN yarn build
-
 COPY . .
+
+RUN yarn build
 
 CMD [ "node", "dist/app.js" ]
