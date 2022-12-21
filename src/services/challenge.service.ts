@@ -26,9 +26,9 @@ export class ChallengeService {
 	}
 
 	async joinChallenge(challengeId: number, user: User) {
-		await this.checkDate(challengeId);
-
 		if (await this.challengeRepository.getOneChallenge(challengeId)) {
+			await this.checkDate(challengeId);
+
 			if (!(await this.joinRepository.checkJoinChallenge(challengeId, user))) {
 				this.joinRepository.joinChallenge(challengeId, user);
 			} else throw new ConflictError();

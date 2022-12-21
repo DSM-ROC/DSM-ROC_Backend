@@ -40,4 +40,8 @@ export class CommentRepository extends Repository<Comment> {
 	async checkComment(postId: number, commentId: number) {
 		return this.findOne({ id: commentId, postId });
 	}
+
+	async deleteAllComment(postId: number) {
+		return this.delete({ postId });
+	}
 }

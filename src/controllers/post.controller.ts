@@ -1,5 +1,7 @@
 import { ChallengeRepository } from '../repositories/challenge.repository';
+import { CommentRepository } from '../repositories/comment.repository';
 import { JoinRepository } from '../repositories/join.repository';
+import { LikeRepository } from '../repositories/like.repository';
 import { PostRepository } from '../repositories/post.repository';
 import { PostService } from '../services/post.service';
 import { BusinessLogic } from '../shared/BusinessLogicInterface';
@@ -10,6 +12,8 @@ export class PostController {
 		PostRepository.getQueryRepository(),
 		ChallengeRepository.getQueryRepository(),
 		JoinRepository.getQueryRepository(),
+		CommentRepository.getQueryRepository(),
+		LikeRepository.getQueryRepository(),
 	);
 
 	public createPost: BusinessLogic = async (req, res, next) => {

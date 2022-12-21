@@ -1,6 +1,8 @@
 import { User } from '../entity/user';
 import { ChallengeRepository } from '../repositories/challenge.repository';
+import { CommentRepository } from '../repositories/comment.repository';
 import { JoinRepository } from '../repositories/join.repository';
+import { LikeRepository } from '../repositories/like.repository';
 import { PostRepository } from '../repositories/post.repository';
 import { PostInfo } from '../shared/DataTransferObject';
 import { ForbiddenError, NotFoundError } from '../shared/exception';
@@ -10,6 +12,8 @@ export class PostService {
 		private postRepository: PostRepository,
 		private challengeRepository: ChallengeRepository,
 		private joinRepository: JoinRepository,
+		private commentRepository: CommentRepository,
+		private likeRepository: LikeRepository,
 	) {}
 
 	async createPost(challengeId: number, postInfo: PostInfo, user: User) {
@@ -27,6 +31,9 @@ export class PostService {
 	async deletePost(challengeId: number, postId: number, user: User) {
 		await this.checkChallenge(challengeId, user);
 		await this.checkPost(challengeId, postId, user);
+
+		await this.commentRepository.deleteAllComment(postId);
+		await this.likeRepository.DeleteAllLike(postId);
 
 		return this.postRepository.deletePost(postId, user);
 	}
