@@ -24,13 +24,17 @@ export class CommentController {
 		return res.status(201).json(response);
 	};
 
-	public getAllCommnet: BusinessLogic = async (req, res, next) => {
+	public updateComment: BusinessLogic = async (req, res, next) => {
+		const { text } = req.body;
 		const challengeId = Number(req.params.challenge_id);
 		const postId = Number(req.params.post_id);
+		const commentId = Number(req.params.comment_id);
 		const user = req.decoded;
 
-		const response = await this.commentService.getAllComment(challengeId, postId, user);
+		await this.commentService.updateComment(challengeId, postId, commentId, text, user);
 
-		return res.status(200).json(response);
+		return res.status(200).json({
+			message: 'updateComment success',
+		});
 	};
 }
