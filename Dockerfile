@@ -2,14 +2,12 @@ FROM node:16.13.1-alpine
 
 WORKDIR /roc
 
-COPY ./package*.json ./
-
-COPY . . 
+COPY ./package.json ./
 
 RUN yarn
 
-EXPOSE 8080
+RUN yarn build
 
-ENV TZ=Asia/Seoul
+COPY . .
 
-CMD ['yarn', 'build' && 'yarn', 'start']
+CMD [ "node", "dist/app.js" ]
