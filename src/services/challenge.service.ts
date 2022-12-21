@@ -10,7 +10,7 @@ export class ChallengeService {
 		private joinRepository: JoinRepository,
 	) {}
 
-	async createChallenge(challengeInfo: ChallengeInfo, user: User) {
+	async createChallenge(challengeInfo: ChallengeInfo, image: string, user: User) {
 		const alreadyChallenge = await this.challengeRepository.findByName(challengeInfo.name);
 
 		if (alreadyChallenge) throw new ConflictError();
@@ -18,7 +18,8 @@ export class ChallengeService {
 		await this.getDateDiff(challengeInfo.startDay, challengeInfo.endDay);
 		await this.limitMemberCheck(challengeInfo.limitMember);
 
-		return this.challengeRepository.createChallenge(challengeInfo, user);
+		const challenge = await this.challengeRepository.createChallenge(challengeInfo, image, user);
+		return this.joinRepository.joinChallenge(challenge.id, user);
 	}
 
 	async searchChallenge(searchWord: string) {
@@ -47,7 +48,7 @@ export class ChallengeService {
 
 	async getOneChallenge(challengeId: number) {
 		const challenge = await this.challengeRepository.getOneChallenge(challengeId);
-		console.log(challenge);
+
 		if (challenge) return challenge;
 		throw new NotFoundError();
 	}
