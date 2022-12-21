@@ -13,9 +13,9 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"typeorm": "typeorm-ts-node-commonjs",
-		"dev": "env-cmd -f .env.dev nodemon --exec ts-node src/app.ts",
-		"build": "tsc",
-		"start": "NODE_ENV=production node dist/app.js",
+		"dev": "env TZ=Asia/Seoul env-cmd -f .env.dev nodemon --exec ts-node src/app.ts",
+		"build": "env TZ=Asia/Seoul tsc",
+		"start": "env TZ=Asia/Seoul NODE_ENV=production node dist/app.js",
 		"lint": "eslint ./src --ext .ts",
 		"lint:fix": "eslint ./src --ext .ts --fix",
 		"prettier:write": "yarn prettier --write .",

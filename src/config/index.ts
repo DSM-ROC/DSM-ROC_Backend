@@ -15,6 +15,7 @@ export const config = {
 	dbName: databaseConfig.database,
 	dbSynchronize: databaseConfig.synchronize,
 	dbLogging: databaseConfig.logging,
+	dbTimezone: databaseConfig.timezone,
 	jwtSecret: process.env.JWT_SECRET,
 	ServicePort: process.env.PORT,
 };
