@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    name: ROC - CD
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -22,7 +23,7 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           yarn lint
-          
+
       - name: Cache node modules
         uses: actions/cache@v2
         with:

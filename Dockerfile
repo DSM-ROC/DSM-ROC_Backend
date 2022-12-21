@@ -6,9 +6,9 @@ COPY ./package*.json ./
 
 COPY . . 
 
-RUN npm i -g yarn \
-    && npm i -g typescript \
-    && yarn install
+RUN npm i -g yarn
+
+RUN yarn
 
 EXPOSE 8080
 
