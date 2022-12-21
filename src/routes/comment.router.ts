@@ -15,9 +15,9 @@ export const commentServiceRouter = (app: Router) => {
 		verifyTokenMiddleware,
 		errorHandler(commentController.createComment),
 	);
-	router.get(
-		'/:challenge_id/post/:post_id/comment',
+	router.patch(
+		'/:challenge_id/post/:post_id/comment/:comment_id',
 		verifyTokenMiddleware,
-		errorHandler(commentController.getAllCommnet),
+		errorHandler(commentController.updateComment),
 	);
 };
