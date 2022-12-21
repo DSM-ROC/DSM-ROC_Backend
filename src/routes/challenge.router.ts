@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { ChallengeController } from '../controllers/challenge.controller';
 import { errorHandler } from '../middlewares/errorHandler';
 import { verifyRefreshTokenMiddleware, verifyTokenMiddleware } from '../middlewares/verifyToken';
+import { upload } from '../repositories/upload.repository';
 
 const router: Router = Router();
 export const challengeServiceRouter = (app: Router) => {
@@ -9,7 +10,12 @@ export const challengeServiceRouter = (app: Router) => {
 
 	app.use('/challenge', router);
 
-	router.post('/', verifyTokenMiddleware, errorHandler(challengeController.createChallenge));
+	router.post(
+		'/',
+		verifyTokenMiddleware,
+		upload.single('image'),
+		errorHandler(challengeController.createChallenge),
+	);
 	router.get('/', errorHandler(challengeController.getAllChallenge));
 	router.get('/search', errorHandler(challengeController.searchChallenge));
 	router.get('/me', verifyTokenMiddleware, errorHandler(challengeController.getMyChallenge));
