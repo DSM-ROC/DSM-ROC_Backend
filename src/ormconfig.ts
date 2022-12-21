@@ -17,6 +17,7 @@ export const createOptions: ConnectionOptions = {
 	database: config.dbName,
 	synchronize: config.dbSynchronize,
 	logging: config.dbLogging,
+	timezone: config.dbTimezone,
 	entities: [User, Challenge, Join, Post, Comment, Review, Like],
 	dateStrings: true,
 	charset: 'utf8mb4',

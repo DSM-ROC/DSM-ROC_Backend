@@ -13,6 +13,7 @@ const databaseConfigList = {
 		database: process.env.DB_NAME,
 		synchronize: true,
 		logging: true,
+		timezone: 'Asia/Seoul',
 	},
 	test: {
 		type: 'mysql',
@@ -23,6 +24,7 @@ const databaseConfigList = {
 		database: process.env.DB_NAME,
 		synchronize: false,
 		logging: false,
+		timezone: 'Asia/Seoul',
 	},
 	production: {
 		type: 'mysql',
@@ -33,6 +35,7 @@ const databaseConfigList = {
 		database: process.env.DB_NAME,
 		synchronize: false,
 		logging: false,
+		timezone: 'Asia/Seoul',
 	},
 };
 

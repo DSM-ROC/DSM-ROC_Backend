@@ -14,6 +14,7 @@ import {
 	ConflictError,
 	ForbiddenError,
 	UnAuthorizedError,
+	UserNotFoundError,
 } from '../shared/exception';
 import { comparePassword, generateHash } from '../utils/hash';
 
@@ -110,7 +111,7 @@ export class UserService {
 		const user = await this.userRepository.findUserByIdentity(id);
 
 		if (!user) {
-			throw new BadRequestError();
+			throw new UserNotFoundError();
 		}
 		return { ...user };
 	}

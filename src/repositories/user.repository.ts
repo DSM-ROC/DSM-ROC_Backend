@@ -25,7 +25,15 @@ export class UserRepository extends Repository<User> {
 	}
 
 	async findUserByIdentity(id: string): Promise<User> {
-		return this.createQueryBuilder('user').where('user.id = :id').setParameter('id', id).getOne();
+		return this.createQueryBuilder('user')
+			.select('user.id')
+			.addSelect('user.nickname')
+			.addSelect('user.email')
+			.addSelect('user.createdAt')
+			.addSelect('user.updatedAt')
+			.where('user.id = :id')
+			.setParameter('id', id)
+			.getOne();
 	}
 
 	async updateUserInfo(userUpdateInfo: UserUpdateInfo): Promise<User> {

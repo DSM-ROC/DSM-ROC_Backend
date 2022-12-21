@@ -12,22 +12,22 @@ export class ReviewController {
 	);
 
 	public createReview: BusinessLogic = async (req, res, next) => {
-		const { review } = req.body;
+		const { text } = req.body;
 		const challengeId = Number(req.params.challenge_id);
 		const user = req.decoded;
 
-		const response = await this.reviewService.createReview(challengeId, review, user);
+		const response = await this.reviewService.createReview(challengeId, text, user);
 
-		return res.status(202).json(response);
+		return res.status(201).json(response);
 	};
 
 	public updateReview: BusinessLogic = async (req, res, next) => {
-		const { review } = req.body;
+		const { text } = req.body;
 		const challengeId = Number(req.params.challenge_id);
 		const reviewId = Number(req.params.review_id);
 		const user = req.decoded;
 
-		await this.reviewService.updateReview(challengeId, reviewId, review, user);
+		await this.reviewService.updateReview(challengeId, reviewId, text, user);
 
 		return res.status(200).json({ message: 'update success' });
 	};
