@@ -6,8 +6,6 @@ COPY ./package*.json ./
 
 COPY . . 
 
-RUN npm i -g yarn
-
 RUN yarn
 
 EXPOSE 8080
