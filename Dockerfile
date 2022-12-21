@@ -8,4 +8,4 @@ COPY . .
 
 RUN yarn build
 
-CMD [ "node", "dist/app.js" ]
+CMD [ "node", "build/app.js" ]
