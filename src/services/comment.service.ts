@@ -17,7 +17,7 @@ export class CommentService {
 		await this.checkChallenge(challengeId, user);
 		await this.checkPost(challengeId, postId);
 
-		await this.commentRepository.createComment(postId, text, user);
+		return await this.commentRepository.createComment(postId, text, user);
 	}
 
 	async checkChallenge(challengeId: number, user: User) {
