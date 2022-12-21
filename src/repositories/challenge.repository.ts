@@ -9,11 +9,12 @@ export class ChallengeRepository extends Repository<Challenge> {
 		return getCustomRepository(ChallengeRepository);
 	}
 
-	async createChallenge(challengeInfo: ChallengeInfo, user: User) {
+	async createChallenge(challengeInfo: ChallengeInfo, image: string, user: User) {
 		const newChallenge = this.create();
 
 		newChallenge.name = challengeInfo.name;
 		newChallenge.introduction = challengeInfo.introduction;
+		newChallenge.coverImage = image;
 		newChallenge.limitMember = challengeInfo.limitMember;
 		newChallenge.startDay = challengeInfo.startDay;
 		newChallenge.endDay = challengeInfo.endDay;
@@ -33,6 +34,7 @@ export class ChallengeRepository extends Repository<Challenge> {
 			.addSelect('challenge.name')
 			.addSelect('user.nickname')
 			.addSelect('challenge.introduction')
+			.addSelect('challenge.coverImage')
 			.addSelect('challenge.limitMember')
 			.addSelect('challenge.startDay')
 			.addSelect('challenge.endDay')
@@ -50,6 +52,7 @@ export class ChallengeRepository extends Repository<Challenge> {
 			.addSelect('challenge.name')
 			.addSelect('user.nickname')
 			.addSelect('challenge.introduction')
+			.addSelect('challenge.coverImage')
 			.addSelect('challenge.limitMember')
 			.addSelect('challenge.startDay')
 			.addSelect('challenge.endDay')
@@ -66,6 +69,7 @@ export class ChallengeRepository extends Repository<Challenge> {
 			.addSelect('challenge.name')
 			.addSelect('user.nickname')
 			.addSelect('challenge.introduction')
+			.addSelect('challenge.coverImage')
 			.addSelect('challenge.limitMember')
 			.addSelect('challenge.startDay')
 			.addSelect('challenge.endDay')
