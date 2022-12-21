@@ -8,24 +8,24 @@ export class ReviewRepository extends Repository<Review> {
 		return getCustomRepository(ReviewRepository);
 	}
 
-	async createReview(challengeId: number, review: string, user: User) {
+	async createReview(challengeId: number, text: string, user: User) {
 		const newReview = new Review();
 
-		newReview.text = review;
+		newReview.text = text;
 		newReview.challengeId = challengeId;
 		newReview.userId = user.id;
 
 		return this.save(newReview);
 	}
 
-	async updateReview(reviewId: number, review: string, user: User) {
+	async updateReview(reviewId: number, text: string, user: User) {
 		const newReview = await this.update(
 			{
 				id: reviewId,
 				userId: user.id,
 			},
 			{
-				text: review,
+				text,
 			},
 		);
 
