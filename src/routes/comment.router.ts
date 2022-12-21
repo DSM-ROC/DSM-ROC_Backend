@@ -20,4 +20,9 @@ export const commentServiceRouter = (app: Router) => {
 		verifyTokenMiddleware,
 		errorHandler(commentController.updateComment),
 	);
+	router.delete(
+		'/:challenge_id/post/:post_id/comment/:comment_id',
+		verifyTokenMiddleware,
+		errorHandler(commentController.deleteComment),
+	);
 };
