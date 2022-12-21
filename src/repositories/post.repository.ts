@@ -49,8 +49,15 @@ export class PostRepository extends Repository<Post> {
 			.addSelect('post.updatedAt')
 			.addSelect('user.nickname')
 			.addSelect('challenge.name')
+			.addSelect('comment.text')
+			.addSelect('comment.createdAt')
+			.addSelect('comment.updatedAt')
+			.addSelect('writer.nickname')
 			.innerJoin('post.user', 'user')
 			.innerJoin('post.challenge', 'challenge')
+			.leftJoin('post.comment', 'comment')
+			.leftJoin('comment.user', 'writer')
+			.loadRelationCountAndMap('post.likeCount', 'post.like', 'likeCount')
 			.where('post.id = :postId AND post.challengeId = challengeId', {
 				postId,
 				challengeId,
@@ -67,9 +74,16 @@ export class PostRepository extends Repository<Post> {
 			.addSelect('post.updatedAt')
 			.addSelect('user.nickname')
 			.addSelect('challenge.name')
+			.addSelect('comment.text')
+			.addSelect('comment.createdAt')
+			.addSelect('comment.updatedAt')
+			.addSelect('writer.nickname')
 			.innerJoin('post.user', 'user')
 			.innerJoin('post.challenge', 'challenge')
-			.where('post.challengeId = challengeId', { challengeId })
+			.leftJoin('post.comment', 'comment')
+			.leftJoin('comment.user', 'writer')
+			.loadRelationCountAndMap('post.likeCount', 'post.like', 'likeCount')
+			.where('post.challengeId = :challengeId', { challengeId })
 			.getMany();
 	}
 
