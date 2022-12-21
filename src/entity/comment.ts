@@ -22,7 +22,7 @@ export class Comment {
 	@Column()
 	writer: number;
 
-	@Column({ nullable: false })
+	@Column({ charset: 'utf8mb4', collation: 'utf8mb4_general_ci' })
 	text: string;
 
 	@CreateDateColumn()
