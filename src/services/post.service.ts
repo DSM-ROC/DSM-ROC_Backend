@@ -38,11 +38,12 @@ export class PostService {
 	}
 
 	async getOnePost(challengeId: number, postId: number, user: User) {
+		const post = await this.postRepository.getOnePost(challengeId, postId);
+
 		await this.checkChallenge(challengeId, user);
 
-		if (!(await this.postRepository.getOnePost(challengeId, postId))) throw new NotFoundError();
-
-		return this.postRepository.getOnePost(challengeId, postId);
+		if (!post) throw new NotFoundError();
+		return post;
 	}
 
 	async checkChallenge(challengeId: number, user: User) {
