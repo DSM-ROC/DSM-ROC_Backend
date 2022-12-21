@@ -17,7 +17,7 @@ export class CommentService {
 		await this.checkChallenge(challengeId, user);
 		await this.checkPost(challengeId, postId);
 
-		return await this.commentRepository.createComment(postId, text, user);
+		return this.commentRepository.createComment(postId, text, user);
 	}
 
 	async checkChallenge(challengeId: number, user: User) {
@@ -28,5 +28,12 @@ export class CommentService {
 
 	async checkPost(challengeId: number, postId: number) {
 		if (!(await this.postRepository.checkPost(challengeId, postId))) throw new NotFoundError();
+	}
+
+	async checkComment(postId: number, commentId: number, user: User) {
+		const comment = await this.commentRepository.checkComment(postId, commentId);
+
+		if (!comment) throw new NotFoundError();
+		if (comment.writer !== user.id) throw new ForbiddenError();
 	}
 }
