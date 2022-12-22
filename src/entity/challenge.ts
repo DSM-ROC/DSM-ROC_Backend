@@ -21,8 +21,11 @@ export class Challenge {
 	@Column({ unique: true, nullable: false, length: 15 })
 	name: string;
 
-	@Column({ length: 200, nullable: true })
+	@Column({ length: 200, nullable: true, charset: 'utf8mb4', collation: 'utf8mb4_general_ci' })
 	introduction: string;
+
+	@Column({ nullable: true })
+	coverImage: string;
 
 	@Column({ nullable: false })
 	limitMember: number;

@@ -13,9 +13,10 @@ export class ChallengeController {
 
 	public createChallenge: BusinessLogic = async (req, res, next) => {
 		const challengeInfo = req.body as ChallengeInfo;
+		const image = (<any>req.file)?.location;
 		const user = req.decoded;
 
-		const response = await this.challengeService.createChallenge(challengeInfo, user);
+		const response = await this.challengeService.createChallenge(challengeInfo, image, user);
 
 		return res.status(201).json(response);
 	};
