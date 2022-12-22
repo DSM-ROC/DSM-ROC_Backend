@@ -28,6 +28,7 @@ export class JoinRepository extends Repository<Join> {
 	async getChallengeMember(challengeId: number) {
 		return this.createQueryBuilder('join')
 			.select('join.userId')
+			.addSelect('user.id')
 			.addSelect('user.nickname')
 			.innerJoin('join.user', 'user')
 			.where('join.challengeId = :challenge_id', { challenge_id: challengeId })
