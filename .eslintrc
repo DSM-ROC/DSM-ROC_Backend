@@ -43,7 +43,8 @@
 		"import/no-cycle": "off",
 		"@typescript-eslint/no-floating-promises": "off",
 		"@typescript-eslint/no-shadow": "off",
-		"@typescript-eslint/lines-between-class-members": "off"
+		"@typescript-eslint/lines-between-class-members": "off",
+		"@typescript-eslint/no-unnecessary-type-assertion": "off"
 	},
 	"ignorePatterns": ["node_modules/", "build", "**/*.js", "ormconfig.ts", "tests/"]
 }
