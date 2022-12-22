@@ -16,7 +16,7 @@ jobs:
       - uses: c-hive/gha-yarn-cache@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '17.x'
+          node-version: '16.x'
 
       - name: yarn install, and lint
         working-directory: ./
