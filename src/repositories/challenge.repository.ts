@@ -81,7 +81,7 @@ export class ChallengeRepository extends Repository<Challenge> {
 			.innerJoin('challenge.user', 'user')
 			.loadRelationCountAndMap('challenge.joinMember', 'challenge.join')
 			.where('challenge.name like :searchWord OR challenge.introduction like :searchWord', {
-				searchWord,
+				searchWord: `%${searchWord}%`,
 			})
 			.getMany();
 	}
