@@ -1,8 +1,8 @@
-import { JoinRepository } from '../repositories/join.repository';
 import { UserRepository } from '../repositories/user.repository';
 import { UserService } from '../services/user.service';
 import { BusinessLogic } from '../shared/BusinessLogicInterface';
 import {
+	ShowUserInfoResObj,
 	UserInfo,
 	UserInfoResObj,
 	UserLoginInfo,
@@ -54,6 +54,13 @@ export class UserController {
 
 	public showUserInfo: BusinessLogic = async (req, res, next) => {
 		const response: UserInfoResObj = await this.userService.showUserInfo(req.params.id);
+		return res.status(200).json(response);
+	};
+
+	public showMyInfo: BusinessLogic = async (req, res, next) => {
+		const user = req.decoded;
+
+		const response: ShowUserInfoResObj = await this.userService.showMyInfo(user);
 		return res.status(200).json(response);
 	};
 }
