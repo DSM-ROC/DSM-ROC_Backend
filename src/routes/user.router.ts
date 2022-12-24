@@ -9,13 +9,15 @@ export const userServiceRouter = (app: Router) => {
 
 	app.use('/user', router);
 
-	router.post('/', errorHandler(userController.createUser));
-
-	router.post('/token', errorHandler(userController.login));
-
 	router.get('/refresh', verifyRefreshTokenMiddleware, errorHandler(userController.refreshToken));
 
 	router.get('/:id', errorHandler(userController.showUserInfo));
+
+	router.get('/', verifyTokenMiddleware, errorHandler(userController.showMyInfo));
+
+	router.post('/', errorHandler(userController.createUser));
+
+	router.post('/token', errorHandler(userController.login));
 
 	router.patch('/mypage', verifyTokenMiddleware, errorHandler(userController.updateInfo));
 

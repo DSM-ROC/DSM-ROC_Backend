@@ -36,6 +36,15 @@ export class UserRepository extends Repository<User> {
 			.getOne();
 	}
 
+	async getMyInfo(user: User): Promise<User> {
+		return this.createQueryBuilder('user')
+			.select('user.id')
+			.addSelect('user.email')
+			.addSelect('user.nickname')
+			.where('user.id = :id', { id: user.id })
+			.getOne();
+	}
+
 	async updateUserInfo(userUpdateInfo: UserUpdateInfo): Promise<User> {
 		const user = await this.findOne(userUpdateInfo.id);
 

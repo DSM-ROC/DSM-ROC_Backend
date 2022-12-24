@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../config';
+import { User } from '../entity/user';
 import { UserRepository } from '../repositories/user.repository';
 import {
 	UpdateInfo,
@@ -10,7 +11,6 @@ import {
 	UserUpdateInfo,
 } from '../shared/DataTransferObject';
 import {
-	BadRequestError,
 	ConflictError,
 	ForbiddenError,
 	UnAuthorizedError,
@@ -24,7 +24,7 @@ export class UserService {
 	async getUser(id: number): Promise<{ email: string; nickname: string } & UpdateInfo> {
 		const user = await this.userRepository.findUserById(id);
 		if (!user) {
-			throw new UnAuthorizedError();
+			throw new UserNotFoundError();
 		}
 		const { email, nickname, createdAt, updatedAt } = user;
 		return { email, nickname, createdAt, updatedAt };
@@ -52,8 +52,9 @@ export class UserService {
 
 	async login({ email, password }: UserLoginInfo): Promise<UserTokenResObj> {
 		const user = await this.userRepository.findUserByEmail(email);
+
 		if (!user) {
-			throw new UnAuthorizedError();
+			throw new UserNotFoundError();
 		}
 
 		const isValid = comparePassword(user.password, password);
@@ -89,7 +90,7 @@ export class UserService {
 	async cancleMember(id: number, password: string): Promise<void> {
 		const user = await this.userRepository.findUserById(id);
 
-		if (!user) throw new UnAuthorizedError();
+		if (!user) throw new UserNotFoundError();
 		console.log(password, user, id);
 		const isValid = comparePassword(user.password, password);
 		if (!isValid) {
@@ -114,6 +115,10 @@ export class UserService {
 			throw new UserNotFoundError();
 		}
 		return { ...user };
+	}
+
+	public async showMyInfo(user: User) {
+		return this.userRepository.getMyInfo(user);
 	}
 
 	private async issuanceToken(email: string, type: string): Promise<string> {
