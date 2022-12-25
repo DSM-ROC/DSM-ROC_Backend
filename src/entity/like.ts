@@ -10,11 +10,11 @@ export class Like {
 	@PrimaryColumn()
 	userId: number;
 
-	@ManyToOne(() => User, user => user.like)
+	@ManyToOne(() => User, user => user.like, { onDelete: 'CASCADE' })
 	@JoinColumn({ name: 'userId' })
 	user: User;
 
-	@ManyToOne(() => Post, post => post.like)
+	@ManyToOne(() => Post, post => post.like, { onDelete: 'CASCADE' })
 	@JoinColumn({ name: 'postId' })
 	post: Post;
 }
