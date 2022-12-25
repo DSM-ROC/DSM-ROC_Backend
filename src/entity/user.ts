@@ -9,6 +9,7 @@ import {
 
 import { Join } from './join';
 import { Like } from './like';
+import { Post } from './post';
 import { Review } from './review';
 
 @Entity({ name: 'user' })
@@ -31,12 +32,15 @@ export class User {
 	@UpdateDateColumn({ name: 'updatedAt' })
 	updatedAt: Date;
 
-	@OneToMany(() => Join, join => join.user)
+	@OneToMany(() => Join, join => join.user, { cascade: true })
 	join: Join[];
 
-	@OneToMany(() => Review, review => review.user)
+	@OneToMany(() => Review, review => review.user, { cascade: true })
 	review: Review[];
 
-	@OneToMany(() => Like, like => like.user)
+	@OneToMany(() => Like, like => like.user, { cascade: true })
 	like: Like[];
+
+	@OneToMany(() => Post, post => post.user, { cascade: true })
+	post: Post[];
 }

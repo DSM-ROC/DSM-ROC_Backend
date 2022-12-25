@@ -31,11 +31,11 @@ export class Comment {
 	@UpdateDateColumn()
 	updatedAt: Date;
 
-	@ManyToOne(() => User, user => user.id, { nullable: false })
+	@ManyToOne(() => User, user => user.id, { nullable: false, onDelete: 'CASCADE' })
 	@JoinColumn({ name: 'writer' })
 	user: User;
 
-	@ManyToOne(() => Post, post => post.id, { nullable: false })
+	@ManyToOne(() => Post, post => post.id, { nullable: false, onDelete: 'CASCADE' })
 	@JoinColumn({ name: 'postId' })
 	post: Post;
 }

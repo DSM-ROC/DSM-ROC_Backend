@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Topic } from './enum/topic.enum';
 import { Join } from './join';
+import { Post } from './post';
 import { Review } from './review';
 import { User } from './user';
 
@@ -48,13 +49,16 @@ export class Challenge {
 	@UpdateDateColumn()
 	updatedAt: Date;
 
-	@OneToMany(() => Join, join => join.challenge)
+	@OneToMany(() => Join, join => join.challenge, { cascade: true })
 	join: Join[];
 
-	@OneToMany(() => Review, review => review.challenge)
+	@OneToMany(() => Review, review => review.challenge, { cascade: true })
 	review: Review[];
 
-	@ManyToOne(() => User, user => user.id, { nullable: false })
+	@OneToMany(() => Post, post => post.challenge, { cascade: true })
+	post: Post[];
+
+	@ManyToOne(() => User, user => user.id, { nullable: false, cascade: true, onDelete: 'CASCADE' })
 	@JoinColumn({ name: 'leader' })
 	user: User;
 }
