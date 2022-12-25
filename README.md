@@ -1,4 +1,4 @@
-# DSM-LOC_Backend
+# DSM-ROC_Backend
 
 ## Project Introduction
 
@@ -70,7 +70,7 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 <summary>⌨️ Backend Developer ⌨️</summary>
 <div class="Backend-developer">
 
-| ![skmn3](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/81291090?s=400&v=4"?v=4&h=250&w=250&fit=cover&mask=circle&maxage=7d) | ![2yev1n](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/81291095?v=4"?v=4&h=250&w=250&fit=cover&mask=circle&maxage=7d) |
+| ![skmn3](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/81291090?s=400&v=4"?v=4&h=100&w=100&fit=cover&mask=circle&maxage=7d) | ![2yev1n](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/81291095?v=4"?v=4&h=100&w=100&fit=cover&mask=circle&maxage=7d) |
 | :-------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------: |
 |                                                         [박상진](https://github.com/skmn3)                                                          |                                                      [이예빈](https://github.com/2yev1n)                                                       |
 
