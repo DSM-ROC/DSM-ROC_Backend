@@ -39,17 +39,17 @@ export class Post {
 	@UpdateDateColumn()
 	updatedAt: Date;
 
-	@ManyToOne(() => Challenge, challenge => challenge.id, { nullable: false })
+	@ManyToOne(() => Challenge, challenge => challenge.id, { nullable: false, onDelete: 'CASCADE' })
 	@JoinColumn({ name: 'challengeId' })
 	challenge: Challenge;
 
-	@ManyToOne(() => User, user => user.id, { nullable: false })
+	@ManyToOne(() => User, user => user.id, { nullable: false, onDelete: 'CASCADE' })
 	@JoinColumn({ name: 'writer' })
 	user: User;
 
-	@OneToMany(() => Like, like => like.post)
+	@OneToMany(() => Like, like => like.post, { cascade: true })
 	like: Like[];
 
-	@OneToMany(() => Comment, comment => comment.post)
+	@OneToMany(() => Comment, comment => comment.post, { cascade: true })
 	comment: Comment[];
 }
