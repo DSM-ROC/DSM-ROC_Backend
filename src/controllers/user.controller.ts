@@ -1,3 +1,4 @@
+import { REFRESH_TOKEN_COOKIE_KEY } from '../constants/auth';
 import { UserRepository } from '../repositories/user.repository';
 import { UserService } from '../services/user.service';
 import { BusinessLogic } from '../shared/BusinessLogicInterface';
@@ -35,12 +36,19 @@ export class UserController {
 		return res.status(200).json(response);
 	};
 
+	public logout: BusinessLogic = async (req, res, next) => {
+		try {
+			res.clearCookie(REFRESH_TOKEN_COOKIE_KEY);
+			return res.status(204).end();
+		} catch (err) {
+			next(err);
+		}
+	};
+
 	public cancelMember: BusinessLogic = async (req, res, next) => {
 		await this.userService.cancleMember(req.decoded.id, req.body.password);
 
-		return res.status(200).send({
-			message: '회원 탈퇴되었습니다.',
-		});
+		return res.status(204);
 	};
 
 	public refreshToken: BusinessLogic = async (req, res, next) => {
