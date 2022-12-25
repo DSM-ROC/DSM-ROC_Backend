@@ -46,9 +46,9 @@ export class UserController {
 	};
 
 	public cancelMember: BusinessLogic = async (req, res, next) => {
-		await this.userService.cancleMember(req.decoded.id, req.body.password);
+		const response = await this.userService.cancleMember(req.decoded.id, req.body.password);
 
-		return res.status(204);
+		return res.status(204).json(response);
 	};
 
 	public refreshToken: BusinessLogic = async (req, res, next) => {
