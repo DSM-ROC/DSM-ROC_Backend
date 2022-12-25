@@ -63,7 +63,7 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 ## Project Member
 
 <details>
-<summary><b>[ 👨‍👩‍👦‍👦 DSM-LOC Backend Developer Member ]</b> </summary>
+<summary><b>[ 👨‍👩‍👦‍👦 DSM-ROC Backend Developer Member ]</b> </summary>
 <div markdown="1">
 
 <details>
