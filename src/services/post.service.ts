@@ -33,7 +33,7 @@ export class PostService {
 		await this.checkPost(challengeId, postId, user);
 
 		await this.commentRepository.deleteAllComment(postId);
-		await this.likeRepository.DeleteAllLike(postId);
+		await this.likeRepository.deleteAllLike(postId);
 
 		return this.postRepository.deletePost(postId, user);
 	}
