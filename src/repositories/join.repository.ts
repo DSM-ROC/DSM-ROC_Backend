@@ -38,8 +38,12 @@ export class JoinRepository extends Repository<Join> {
 	async getMyChallenge(user: User) {
 		return this.createQueryBuilder('join')
 			.select('join.challengeId')
+			.addSelect('user.nickname')
 			.addSelect('challenge.name')
+			.addSelect('challenge.coverImage')
 			.innerJoin('join.challenge', 'challenge')
+			.innerJoin('challenge.user', 'user')
+			.loadRelationCountAndMap('challenge.joinMember', 'challenge.join')
 			.where('join.userId = :user_id', { user_id: user.id })
 			.getMany();
 	}
