@@ -21,7 +21,7 @@ export class LikeRepository extends Repository<Like> {
 		return this.delete({ postId, userId: user.id });
 	}
 
-	async DeleteAllLike(postId: number) {
+	async deleteAllLike(postId: number) {
 		return this.delete({ postId });
 	}
 
