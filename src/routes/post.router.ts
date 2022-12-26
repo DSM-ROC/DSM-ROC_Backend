@@ -22,7 +22,7 @@ export const postServiceRouter = (app: Router) => {
 	router.delete(
 		'/:challenge_id/post/:post_id',
 		verifyTokenMiddleware,
-		errorHandler(postController.updatePost),
+		errorHandler(postController.deletePost),
 	);
 	router.get('/:challenge_id/post', verifyTokenMiddleware, errorHandler(postController.getAllPost));
 	router.get(
