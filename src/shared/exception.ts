@@ -23,8 +23,8 @@ export class ConflictError extends HttpError {
 }
 
 export class ExpiredTokenError extends HttpError {
-	constructor() {
-		super(401, 'Expired Token');
+	constructor(message = 'Expired Token') {
+		super(401, message);
 	}
 }
 
