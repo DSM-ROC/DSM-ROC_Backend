@@ -28,7 +28,7 @@ export class Post {
 	@Column({ charset: 'utf8mb4', collation: 'utf8mb4_general_ci', length: 25 })
 	title: string;
 
-	@Column({ charset: 'utf8mb4', collation: 'utf8mb4_general_ci' })
+	@Column({ type: 'text', charset: 'utf8mb4', collation: 'utf8mb4_general_ci' })
 	text: string;
 
 	@CreateDateColumn()

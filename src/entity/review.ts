@@ -21,7 +21,7 @@ export class Review {
 	@Column()
 	userId: number;
 
-	@Column({ charset: 'utf8mb4', collation: 'utf8mb4_general_ci' })
+	@Column({ type: 'text', charset: 'utf8mb4', collation: 'utf8mb4_general_ci' })
 	text: string;
 
 	@CreateDateColumn({ name: 'createdAt' })
