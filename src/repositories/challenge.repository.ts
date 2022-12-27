@@ -1,4 +1,4 @@
-import { EntityRepository, getCustomRepository, Like, Repository } from 'typeorm';
+import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
 import { Challenge } from '../entity/challenge';
 import { User } from '../entity/user';
 import { ChallengeInfo } from '../shared/DataTransferObject';

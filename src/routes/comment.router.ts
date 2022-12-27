@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { CommentController } from '../controllers/comment.controller';
-import { PostController } from '../controllers/post.controller';
 import { errorHandler } from '../middlewares/errorHandler';
 import { verifyTokenMiddleware } from '../middlewares/verifyToken';
 

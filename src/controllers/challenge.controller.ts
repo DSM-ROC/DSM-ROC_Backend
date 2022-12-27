@@ -1,4 +1,3 @@
-import { response } from 'express';
 import { ChallengeRepository } from '../repositories/challenge.repository';
 import { ChallengeService } from '../services/challenge.service';
 import { BusinessLogic } from '../shared/BusinessLogicInterface';
