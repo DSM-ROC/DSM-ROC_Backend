@@ -20,16 +20,17 @@
 src
 ├── config              # environment variables and configuration
 ├── constants           # constants
-├── controller          # controllers
+├── controllers         # controllers
 ├── entity              # database entities
-├── helpers             # helper functions
 ├── loaders             # startup process modules
-├── middleware          # middlewares
-├── routes              # routes & controllers
-├── types               # types
+├── middlewares         # middlewares
+├── repositories        # repositories
+├── routes              # router
+├── services            # services
+├── shared              # shared
 ├── utils               # utility functions
-├── validation          # validation functions
-└── app.ts              # App entry point
+├── app.ts              # App entry point
+└── ormconfig.ts        # ORMConfig
 ```
 
 ## Getting Started
