@@ -4,8 +4,6 @@ import {
 	Column,
 	CreateDateColumn,
 	UpdateDateColumn,
-	OneToMany,
-	PrimaryColumn,
 	ManyToOne,
 	JoinColumn,
 } from 'typeorm';
