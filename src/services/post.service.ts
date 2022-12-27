@@ -49,20 +49,22 @@ export class PostService {
 
 		await this.checkChallenge(challengeId, user);
 
-		if (!post) throw new NotFoundError();
+		if (!post) throw new NotFoundError('Post Not Found');
 		return post;
 	}
 
 	async checkChallenge(challengeId: number, user: User) {
-		if (!(await this.challengeRepository.getOneChallenge(challengeId))) throw new NotFoundError();
+		if (!(await this.challengeRepository.getOneChallenge(challengeId)))
+			throw new NotFoundError('Challenge Not Found');
 		if (!(await this.joinRepository.checkJoinChallenge(challengeId, user)))
-			throw new ForbiddenError();
+			throw new ForbiddenError('Challenge Not Join');
 	}
 
 	async checkPost(challengeId: number, postId: number, user: User) {
 		const post = await this.postRepository.checkPost(challengeId, postId);
 
-		if (!post) throw new NotFoundError();
-		else if (post.writer !== user.id) throw new ForbiddenError();
+		if (!post) throw new NotFoundError('Post Not Found');
+		else if (post.writer !== user.id)
+			throw new ForbiddenError('Forbidden to edit other users posts');
 	}
 }

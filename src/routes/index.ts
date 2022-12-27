@@ -6,7 +6,7 @@ import { postServiceRouter } from './post.router';
 import { commentServiceRouter } from './comment.router';
 import { likeServiceRouter } from './like.router';
 
-export const dsmlocRouter = () => {
+export const rocRouter = () => {
 	const app = Router();
 
 	userServiceRouter(app);

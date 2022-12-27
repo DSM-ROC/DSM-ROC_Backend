@@ -28,12 +28,14 @@ export class LikeSerivce {
 	}
 
 	async checkChallenge(challengeId: number, user: User) {
-		if (!(await this.challengeRepository.getOneChallenge(challengeId))) throw new NotFoundError();
+		if (!(await this.challengeRepository.getOneChallenge(challengeId)))
+			throw new NotFoundError('Challenge Not Found');
 		if (!(await this.joinRepository.checkJoinChallenge(challengeId, user)))
-			throw new ForbiddenError();
+			throw new ForbiddenError('Challenge Not Join');
 	}
 
 	async checkPost(challengeId: number, postId: number) {
-		if (!(await this.postRepository.checkPost(challengeId, postId))) throw new NotFoundError();
+		if (!(await this.postRepository.checkPost(challengeId, postId)))
+			throw new NotFoundError('Post Not Found');
 	}
 }

@@ -9,6 +9,12 @@ export const postServiceRouter = (app: Router) => {
 
 	app.use('/challenge', router);
 
+	router.get('/:challenge_id/post', verifyTokenMiddleware, errorHandler(postController.getAllPost));
+	router.get(
+		'/:challenge_id/post/:post_id',
+		verifyTokenMiddleware,
+		errorHandler(postController.getOnePost),
+	);
 	router.post(
 		'/:challenge_id/post',
 		verifyTokenMiddleware,
@@ -23,11 +29,5 @@ export const postServiceRouter = (app: Router) => {
 		'/:challenge_id/post/:post_id',
 		verifyTokenMiddleware,
 		errorHandler(postController.deletePost),
-	);
-	router.get('/:challenge_id/post', verifyTokenMiddleware, errorHandler(postController.getAllPost));
-	router.get(
-		'/:challenge_id/post/:post_id',
-		verifyTokenMiddleware,
-		errorHandler(postController.getOnePost),
 	);
 };

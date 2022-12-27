@@ -13,7 +13,7 @@ export class ChallengeService {
 	async createChallenge(challengeInfo: ChallengeInfo, image: string, user: User) {
 		const alreadyChallenge = await this.challengeRepository.findByName(challengeInfo.name);
 
-		if (alreadyChallenge) throw new ConflictError();
+		if (alreadyChallenge) throw new ConflictError('Challenge Already Exist');
 
 		await this.getDateDiff(challengeInfo.startDay, challengeInfo.endDay);
 		await this.limitMemberCheck(challengeInfo.limitMember);
@@ -32,8 +32,8 @@ export class ChallengeService {
 
 			if (!(await this.joinRepository.checkJoinChallenge(challengeId, user))) {
 				this.joinRepository.joinChallenge(challengeId, user);
-			} else throw new ConflictError();
-		} else throw new NotFoundError();
+			} else throw new ConflictError('Challenge Already Join');
+		} else throw new NotFoundError('Challenge Not Found');
 	}
 
 	async exitChallenge(challengeId: number, user: User) {
@@ -42,15 +42,15 @@ export class ChallengeService {
 		if (challenge) {
 			if (await this.joinRepository.checkJoinChallenge(challengeId, user))
 				this.joinRepository.exitChallenge(challengeId, user);
-			else throw new ForbiddenError();
-		} else throw new NotFoundError();
+			else throw new ForbiddenError('Challenge Not Join');
+		} else throw new NotFoundError('Challenge Not Found');
 	}
 
 	async getOneChallenge(challengeId: number) {
 		const challenge = await this.challengeRepository.getOneChallenge(challengeId);
 
 		if (challenge) return challenge;
-		throw new NotFoundError();
+		throw new NotFoundError('Challenge Not Found');
 	}
 
 	async getAllChallenge() {
@@ -84,7 +84,7 @@ export class ChallengeService {
 	async checkChallenge(challengeId: number, user: User) {
 		if (!(await this.challengeRepository.getOneChallenge(challengeId))) throw new NotFoundError();
 		if (!(await this.joinRepository.checkJoinChallenge(challengeId, user)))
-			throw new ForbiddenError();
+			throw new ForbiddenError('Challenge Not Join');
 	}
 
 	async checkDate(challengeId: number) {

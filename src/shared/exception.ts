@@ -11,14 +11,14 @@ export class HttpError extends Error {
 }
 
 export class UnAuthorizedError extends HttpError {
-	constructor() {
-		super(401, 'Unauthorized');
+	constructor(message = 'Unauthorized') {
+		super(401, message);
 	}
 }
 
 export class ConflictError extends HttpError {
-	constructor() {
-		super(409, 'Conflict');
+	constructor(message = 'Conflict') {
+		super(409, message);
 	}
 }
 
@@ -29,8 +29,8 @@ export class ExpiredTokenError extends HttpError {
 }
 
 export class ForbiddenError extends HttpError {
-	constructor() {
-		super(403, 'Forbidden Request');
+	constructor(message = 'Forbidden Request') {
+		super(403, message);
 	}
 }
 
@@ -41,14 +41,8 @@ export class NotFoundURLError extends HttpError {
 }
 
 export class NotFoundError extends HttpError {
-	constructor() {
-		super(404, `Not Found`);
-	}
-}
-
-export class UserNotFoundError extends HttpError {
-	constructor() {
-		super(404, 'User Not Found');
+	constructor(message = 'Not Found') {
+		super(404, message);
 	}
 }
 

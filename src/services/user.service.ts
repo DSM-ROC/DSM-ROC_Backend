@@ -13,8 +13,8 @@ import {
 import {
 	ConflictError,
 	ForbiddenError,
+	NotFoundError,
 	UnAuthorizedError,
-	UserNotFoundError,
 } from '../shared/exception';
 import { comparePassword, generateHash } from '../utils/hash';
 
@@ -24,7 +24,7 @@ export class UserService {
 	async getUser(id: number): Promise<{ email: string; nickname: string } & UpdateInfo> {
 		const user = await this.userRepository.findUserById(id);
 		if (!user) {
-			throw new UserNotFoundError();
+			throw new NotFoundError('User Not Found');
 		}
 		const { email, nickname, createdAt, updatedAt } = user;
 		return { email, nickname, createdAt, updatedAt };
@@ -54,7 +54,7 @@ export class UserService {
 		const user = await this.userRepository.findUserByEmail(email);
 
 		if (!user) {
-			throw new UserNotFoundError();
+			throw new NotFoundError('User Not Found');
 		}
 
 		const isValid = comparePassword(user.password, password);
@@ -90,11 +90,11 @@ export class UserService {
 	async cancleMember(id: number, password: string): Promise<void> {
 		const user = await this.userRepository.findUserById(id);
 
-		if (!user) throw new UserNotFoundError();
+		if (!user) throw new NotFoundError('User Not Found');
 		console.log(password, user, id);
 		const isValid = comparePassword(user.password, password);
 		if (!isValid) {
-			throw new ForbiddenError();
+			throw new UnAuthorizedError('Password MisMatch Error');
 		} else {
 			this.userRepository.cancleMember(id);
 		}
@@ -112,7 +112,7 @@ export class UserService {
 		const user = await this.userRepository.findUserByIdentity(id);
 
 		if (!user) {
-			throw new UserNotFoundError();
+			throw new NotFoundError('User Not Found');
 		}
 		return { ...user };
 	}

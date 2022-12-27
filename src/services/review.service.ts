@@ -42,7 +42,7 @@ export class ReviewService {
 		await this.checkChallenge(challengeId, user);
 
 		if (!(await this.reviewRepository.getOneReview(challengeId, reviewId)))
-			throw new NotFoundError();
+			throw new NotFoundError('Review Not Found');
 
 		return this.reviewRepository.getOneReview(challengeId, reviewId);
 	}
@@ -58,15 +58,17 @@ export class ReviewService {
 	}
 
 	async checkChallenge(challengeId: number, user: User) {
-		if (!(await this.challengeRepository.getOneChallenge(challengeId))) throw new NotFoundError();
+		if (!(await this.challengeRepository.getOneChallenge(challengeId)))
+			throw new NotFoundError('Challenge Not Found');
 		if (!(await this.joinRepository.checkJoinChallenge(challengeId, user)))
-			throw new ForbiddenError();
+			throw new ForbiddenError('Challenge Not Join');
 	}
 
 	async checkReview(challengeId: number, reviewId: number, user: User) {
 		const review = await this.reviewRepository.checkReview(challengeId, reviewId);
 
-		if (!review) throw new NotFoundError();
-		else if (review.userId !== user.id) throw new ForbiddenError();
+		if (!review) throw new NotFoundError('Review Not Found');
+		else if (review.userId !== user.id)
+			throw new ForbiddenError('Forbidden to edit other users reviews');
 	}
 }

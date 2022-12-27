@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { ServerResponse } from 'http';
 import { config } from '../config';
-import { dsmlocRouter } from '../routes';
+import { rocRouter } from '../routes';
 import { HttpError, NotFoundURLError } from '../shared/exception';
 import { logger } from '../shared/logger';
 
@@ -33,7 +33,7 @@ export const loadExpress = (app: Application) => {
 
 	app.use(cors(CorsOption));
 
-	app.use('/', dsmlocRouter());
+	app.use('/', rocRouter());
 
 	app.use((req: Request, res: Response, next: NextFunction) => {
 		next(new NotFoundURLError(req.url));
