@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ChallengeController } from '../controllers/challenge.controller';
 import { errorHandler } from '../middlewares/errorHandler';
-import { verifyRefreshTokenMiddleware, verifyTokenMiddleware } from '../middlewares/verifyToken';
+import { verifyTokenMiddleware } from '../middlewares/verifyToken';
 import { upload } from '../repositories/upload.repository';
 
 const router: Router = Router();
