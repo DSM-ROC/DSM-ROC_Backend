@@ -10,15 +10,21 @@ export const challengeServiceRouter = (app: Router) => {
 
 	app.use('/challenge', router);
 
+	router.get('/', errorHandler(challengeController.getAllChallenge));
+	router.get('/search', errorHandler(challengeController.searchChallenge));
+	router.get('/me', verifyTokenMiddleware, errorHandler(challengeController.getMyChallenge));
+	router.get('/:challenge_id', errorHandler(challengeController.getOneChallenge));
+	router.get(
+		'/:challenge_id/member',
+		verifyTokenMiddleware,
+		errorHandler(challengeController.getChallengeMember),
+	);
 	router.post(
 		'/',
 		verifyTokenMiddleware,
 		upload.single('image'),
 		errorHandler(challengeController.createChallenge),
 	);
-	router.get('/', errorHandler(challengeController.getAllChallenge));
-	router.get('/search', errorHandler(challengeController.searchChallenge));
-	router.get('/me', verifyTokenMiddleware, errorHandler(challengeController.getMyChallenge));
 	router.post(
 		'/:challenge_id',
 		verifyTokenMiddleware,
@@ -28,11 +34,5 @@ export const challengeServiceRouter = (app: Router) => {
 		'/:challenge_id',
 		verifyTokenMiddleware,
 		errorHandler(challengeController.exitChallenge),
-	);
-	router.get('/:challenge_id', errorHandler(challengeController.getOneChallenge));
-	router.get(
-		'/:challenge_id/member',
-		verifyTokenMiddleware,
-		errorHandler(challengeController.getChallengeMember),
 	);
 };
