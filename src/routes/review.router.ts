@@ -9,6 +9,16 @@ export const reviewServiceRouter = (app: Router) => {
 
 	app.use('/challenge', router);
 
+	router.get(
+		'/:challenge_id/review',
+		verifyTokenMiddleware,
+		errorHandler(reviewController.getAllReview),
+	);
+	router.get(
+		'/:challenge_id/review/:review_id',
+		verifyTokenMiddleware,
+		errorHandler(reviewController.getOneReview),
+	);
 	router.post(
 		'/:challenge_id/review',
 		verifyTokenMiddleware,
@@ -23,16 +33,5 @@ export const reviewServiceRouter = (app: Router) => {
 		'/:challenge_id/review/:review_id',
 		verifyTokenMiddleware,
 		errorHandler(reviewController.deleteReview),
-	);
-	router.get(
-		'/:challenge_id/review',
-		verifyTokenMiddleware,
-		errorHandler(reviewController.getAllReview),
-	);
-
-	router.get(
-		'/:challenge_id/review/:review_id',
-		verifyTokenMiddleware,
-		errorHandler(reviewController.getOneReview),
 	);
 };
