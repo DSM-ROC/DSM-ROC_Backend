@@ -25,10 +25,18 @@ export class Comment {
 	@Column({ type: 'text', charset: 'utf8mb4', collation: 'utf8mb4_general_ci' })
 	text: string;
 
-	@CreateDateColumn()
+	@CreateDateColumn({
+		type: 'timestamp',
+		nullable: false,
+		name: 'createdAt',
+	})
 	createdAt: Date;
 
-	@UpdateDateColumn()
+	@UpdateDateColumn({
+		type: 'timestamp',
+		nullable: false,
+		name: 'updatedAt',
+	})
 	updatedAt: Date;
 
 	@ManyToOne(() => User, user => user.id, { nullable: false, onDelete: 'CASCADE' })
