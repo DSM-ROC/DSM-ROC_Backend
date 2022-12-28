@@ -45,7 +45,7 @@ export const loadExpress = (app: Application) => {
 		res.status(statusCode).json({
 			statusCode,
 			message: err.message,
-			timeStamp: new Date(),
+			timeStamp: new Date().toTimeString(),
 		});
 	});
 
