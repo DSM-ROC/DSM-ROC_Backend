@@ -26,10 +26,18 @@ export class User {
 	@Column({ nullable: false })
 	password: string;
 
-	@CreateDateColumn({ name: 'createdAt' })
+	@CreateDateColumn({
+		type: 'timestamp',
+		nullable: false,
+		name: 'createdAt',
+	})
 	createdAt: Date;
 
-	@UpdateDateColumn({ name: 'updatedAt' })
+	@UpdateDateColumn({
+		type: 'timestamp',
+		nullable: false,
+		name: 'updatedAt',
+	})
 	updatedAt: Date;
 
 	@OneToMany(() => Join, join => join.user, { cascade: true })

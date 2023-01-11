@@ -43,10 +43,18 @@ export class Challenge {
 	@Column()
 	leader: number;
 
-	@CreateDateColumn()
+	@CreateDateColumn({
+		type: 'timestamp',
+		nullable: false,
+		name: 'createdAt',
+	})
 	createdAt: Date;
 
-	@UpdateDateColumn()
+	@UpdateDateColumn({
+		type: 'timestamp',
+		nullable: false,
+		name: 'updatedAt',
+	})
 	updatedAt: Date;
 
 	@OneToMany(() => Join, join => join.challenge, { cascade: true })
