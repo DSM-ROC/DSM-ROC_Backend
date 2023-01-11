@@ -1,7 +1,7 @@
 import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
 import { Post } from '../entity/post';
 import { User } from '../entity/user';
-import { PostInfo } from '../shared/DataTransferObject';
+import { PostInfo, PostUpdateInfo } from '../shared/DataTransferObject';
 
 @EntityRepository(Post)
 export class PostRepository extends Repository<Post> {
@@ -9,26 +9,26 @@ export class PostRepository extends Repository<Post> {
 		return getCustomRepository(PostRepository);
 	}
 
-	async createPost(challengeId: number, postInfo: PostInfo, user: User) {
+	async createPost(postInfo: PostInfo, user: User): Promise<Post> {
 		const newPost = new Post();
 
 		newPost.title = postInfo.title;
 		newPost.text = postInfo.text;
 		newPost.writer = user.id;
-		newPost.challengeId = challengeId;
+		newPost.challengeId = postInfo.challengeId;
 
 		return this.save(newPost);
 	}
 
-	async updatePost(postId: number, postInfo: PostInfo, user: User) {
+	async updatePost(postUpdateInfo: PostUpdateInfo, user: User) {
 		return this.update(
 			{
-				id: postId,
+				id: postUpdateInfo.id,
 				writer: user.id,
 			},
 			{
-				title: postInfo.title,
-				text: postInfo.text,
+				title: postUpdateInfo.title,
+				text: postUpdateInfo.text,
 			},
 		);
 	}
@@ -40,7 +40,7 @@ export class PostRepository extends Repository<Post> {
 		});
 	}
 
-	async getOnePost(challengeId: number, postId: number) {
+	async getOnePost(challengeId: number, postId: number): Promise<Post> {
 		return this.createQueryBuilder('post')
 			.select('post.id')
 			.addSelect('post.title')
@@ -87,7 +87,7 @@ export class PostRepository extends Repository<Post> {
 			.getMany();
 	}
 
-	async checkPost(challengeId: number, postId: number) {
+	async checkPost(challengeId: number, postId: number): Promise<Post> {
 		return this.findOne({ id: postId, challengeId });
 	}
 }
