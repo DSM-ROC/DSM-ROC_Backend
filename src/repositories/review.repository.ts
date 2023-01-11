@@ -19,7 +19,7 @@ export class ReviewRepository extends Repository<Review> {
 	}
 
 	async updateReview(reviewId: number, text: string, user: User) {
-		return await this.update(
+		return this.update(
 			{
 				id: reviewId,
 				userId: user.id,
@@ -31,7 +31,7 @@ export class ReviewRepository extends Repository<Review> {
 	}
 
 	async deleteReview(reviewId: number, user: User) {
-		return await this.delete({
+		return this.delete({
 			id: reviewId,
 			userId: user.id,
 		});

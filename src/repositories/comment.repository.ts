@@ -23,7 +23,7 @@ export class CommentRepository extends Repository<Comment> {
 		const comment = await this.findOne({ id: commentUpdateInfo.id, writer: user.id });
 
 		this.merge(comment, commentUpdateInfo);
-		return await this.save(comment);
+		return this.save(comment);
 	}
 
 	async deleteComment(commentId: number, user: User) {
