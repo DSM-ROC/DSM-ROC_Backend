@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import { Challenge } from '../entity/challenge';
+import { Comment } from '../entity/comment';
 import { Topic } from '../entity/enum/topic.enum';
 import { Post } from '../entity/post';
 
@@ -57,7 +58,24 @@ export class ChallengeInfo extends Challenge {
 }
 
 export class PostInfo extends Post {
+	challengeId: number;
 	title: string;
+	text: string;
+}
+
+export class PostUpdateInfo extends Post {
+	id: number;
+	title: string;
+	text: string;
+}
+
+export class CommentInfo extends Comment {
+	postId: number;
+	text: string;
+}
+
+export class CommentUpdateInfo extends Comment {
+	id: number;
 	text: string;
 }
 
