@@ -8,7 +8,7 @@ export class ReviewRepository extends Repository<Review> {
 		return getCustomRepository(ReviewRepository);
 	}
 
-	async createReview(challengeId: number, text: string, user: User) {
+	async createReview(challengeId: number, text: string, user: User): Promise<Review> {
 		const newReview = new Review();
 
 		newReview.text = text;
@@ -19,7 +19,7 @@ export class ReviewRepository extends Repository<Review> {
 	}
 
 	async updateReview(reviewId: number, text: string, user: User) {
-		const newReview = await this.update(
+		return await this.update(
 			{
 				id: reviewId,
 				userId: user.id,
@@ -28,24 +28,20 @@ export class ReviewRepository extends Repository<Review> {
 				text,
 			},
 		);
-
-		return newReview;
 	}
 
 	async deleteReview(reviewId: number, user: User) {
-		const review = await this.delete({
+		return await this.delete({
 			id: reviewId,
 			userId: user.id,
 		});
-
-		return review;
 	}
 
-	async checkReview(challengeId: number, reviewId: number) {
+	async checkReview(challengeId: number, reviewId: number): Promise<Review> {
 		return this.findOne({ id: reviewId, challengeId });
 	}
 
-	async getOneReview(challengeId: number, reviewId: number) {
+	async getOneReview(challengeId: number, reviewId: number): Promise<Review> {
 		return this.createQueryBuilder('review')
 			.select('review.id')
 			.addSelect('challenge.name')
