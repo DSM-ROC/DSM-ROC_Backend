@@ -24,10 +24,18 @@ export class Review {
 	@Column({ type: 'text', charset: 'utf8mb4', collation: 'utf8mb4_general_ci' })
 	text: string;
 
-	@CreateDateColumn({ name: 'createdAt' })
+	@CreateDateColumn({
+		type: 'timestamp',
+		nullable: false,
+		name: 'createdAt',
+	})
 	createdAt: Date;
 
-	@UpdateDateColumn({ name: 'updatedAt' })
+	@UpdateDateColumn({
+		type: 'timestamp',
+		nullable: false,
+		name: 'updatedAt',
+	})
 	updatedAt: Date;
 
 	@ManyToOne(() => User, user => user.review, { onDelete: 'CASCADE' })
