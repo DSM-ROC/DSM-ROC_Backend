@@ -9,7 +9,11 @@ export class ChallengeRepository extends Repository<Challenge> {
 		return getCustomRepository(ChallengeRepository);
 	}
 
-	async createChallenge(challengeInfo: ChallengeInfo, image: string, user: User) {
+	async createChallenge(
+		challengeInfo: ChallengeInfo,
+		image: string,
+		user: User,
+	): Promise<Challenge> {
 		const newChallenge = this.create();
 
 		newChallenge.name = challengeInfo.name;
@@ -28,7 +32,7 @@ export class ChallengeRepository extends Repository<Challenge> {
 		return this.findOne({ name });
 	}
 
-	async getOneChallenge(id: number) {
+	async getOneChallenge(id: number): Promise<Challenge> {
 		return this.createQueryBuilder('challenge')
 			.select('challenge.id')
 			.addSelect('challenge.name')
