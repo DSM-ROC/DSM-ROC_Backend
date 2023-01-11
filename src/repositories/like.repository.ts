@@ -8,7 +8,7 @@ export class LikeRepository extends Repository<Like> {
 		return getCustomRepository(LikeRepository);
 	}
 
-	async createLike(postId: number, user: User) {
+	async createLike(postId: number, user: User): Promise<Like> {
 		const newLike = new Like();
 
 		newLike.postId = postId;
@@ -25,7 +25,7 @@ export class LikeRepository extends Repository<Like> {
 		return this.delete({ postId });
 	}
 
-	async checkLike(postId: number, user: User) {
+	async checkLike(postId: number, user: User): Promise<Like> {
 		return this.findOne({ postId, userId: user.id });
 	}
 }
