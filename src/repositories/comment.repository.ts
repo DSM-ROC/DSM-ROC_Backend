@@ -1,6 +1,7 @@
 import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
 import { Comment } from '../entity/comment';
 import { User } from '../entity/user';
+import { CommentInfo, CommentUpdateInfo } from '../shared/DataTransferObject';
 
 @EntityRepository(Comment)
 export class CommentRepository extends Repository<Comment> {
@@ -8,26 +9,21 @@ export class CommentRepository extends Repository<Comment> {
 		return getCustomRepository(CommentRepository);
 	}
 
-	async createComment(postId: number, text: string, user: User) {
+	async createComment(commentInfo: CommentInfo, user: User): Promise<Comment> {
 		const newComment = new Comment();
 
-		newComment.text = text;
-		newComment.postId = postId;
+		newComment.text = commentInfo.text;
+		newComment.postId = commentInfo.postId;
 		newComment.writer = user.id;
 
 		return this.save(newComment);
 	}
 
-	async updateComment(commentId: number, text: string, user: User) {
-		return this.update(
-			{
-				id: commentId,
-				writer: user.id,
-			},
-			{
-				text,
-			},
-		);
+	async updateComment(commentUpdateInfo: CommentUpdateInfo, user: User): Promise<Comment> {
+		const comment = await this.findOne({ id: commentUpdateInfo.id, writer: user.id });
+
+		this.merge(comment, commentUpdateInfo);
+		return await this.save(comment);
 	}
 
 	async deleteComment(commentId: number, user: User) {
@@ -37,7 +33,7 @@ export class CommentRepository extends Repository<Comment> {
 		});
 	}
 
-	async checkComment(postId: number, commentId: number) {
+	async checkComment(postId: number, commentId: number): Promise<Comment> {
 		return this.findOne({ id: commentId, postId });
 	}
 
