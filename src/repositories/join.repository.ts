@@ -8,7 +8,7 @@ export class JoinRepository extends Repository<Join> {
 		return getCustomRepository(JoinRepository);
 	}
 
-	async joinChallenge(challengeId: number, user: User) {
+	async joinChallenge(challengeId: number, user: User): Promise<Join> {
 		const join = new Join();
 
 		join.challengeId = challengeId;
@@ -21,7 +21,7 @@ export class JoinRepository extends Repository<Join> {
 		return this.delete({ challengeId, userId: user.id });
 	}
 
-	async checkJoinChallenge(challengeId: number, user: User) {
+	async checkJoinChallenge(challengeId: number, user: User): Promise<Join> {
 		return this.findOne({ challengeId, userId: user.id });
 	}
 
