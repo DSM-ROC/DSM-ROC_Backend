@@ -19,7 +19,7 @@ export class ReviewRepository extends Repository<Review> {
 	}
 
 	async updateReview(reviewId: number, text: string, user: User) {
-		return this.update(
+		return await this.update(
 			{
 				id: reviewId,
 				userId: user.id,
@@ -31,7 +31,7 @@ export class ReviewRepository extends Repository<Review> {
 	}
 
 	async deleteReview(reviewId: number, user: User) {
-		return this.delete({
+		return await this.delete({
 			id: reviewId,
 			userId: user.id,
 		});
@@ -74,7 +74,7 @@ export class ReviewRepository extends Repository<Review> {
 			.getMany();
 	}
 
-	async getMyReview(user: User) {
+	async getMyReview(user: User): Promise<Review> {
 		return this.findOne({ userId: user.id });
 	}
 }
